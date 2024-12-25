@@ -12,8 +12,21 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ChevronDown, MenuIcon, Mountain } from 'lucide-react';
 import { Link } from '@inertiajs/inertia-react';
+import { usePage } from '@inertiajs/react';
 
 const Header = () => {
+  const { url } = usePage(); // Get the current URL
+
+  const links = [
+    {
+      href: '/',
+      label: 'Culture',
+      isActive: url === '/' || url?.includes('posts'),
+    },
+    { href: '/forums', label: 'Forum', isActive: url === '/forums' },
+    { href: '/about', label: 'About', isActive: url === '/about' },
+  ];
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white dark:border-gray-800 dark:bg-gray-950">
       <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
@@ -22,24 +35,18 @@ const Header = () => {
           <span className="texet-md font-medium">SiBolang</span>
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
-          <a
-            href="#"
-            className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 texet-md"
-          >
-            Culture
-          </a>
-          <a
-            href="#"
-            className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 texet-md"
-          >
-            Forum
-          </a>
-          <a
-            href="#"
-            className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 texet-md"
-          >
-            About
-          </a>
+          {/* Map over the links for desktop navigation */}
+          {links.map((link) => {
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 text-md ${link.isActive ? 'text-gray-900 dark:text-gray-50' : ''}`} // Apply active style
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
         <div className="flex items-center gap-4">
           <DropdownMenu>
@@ -75,24 +82,18 @@ const Header = () => {
             </SheetTrigger>
             <SheetContent side="left" className="md:hidden">
               <div className="grid gap-4 p-4">
-                <a
-                  href="#"
-                  className="text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                >
-                  Culture
-                </a>
-                <a
-                  href="#"
-                  className="text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                >
-                  Forum
-                </a>
-                <a
-                  href="#"
-                  className="text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                >
-                  About
-                </a>
+                {/* Map over the links for mobile navigation */}
+                {links.map((link) => {
+                  return (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      className={`text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${link.isActive ? 'text-gray-900 dark:text-gray-50' : ''}`} // Apply active style
+                    >
+                      {link.label}
+                    </a>
+                  );
+                })}
               </div>
             </SheetContent>
           </Sheet>
