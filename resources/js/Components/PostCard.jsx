@@ -10,7 +10,7 @@ import { EllipsisVertical } from 'lucide-react';
 import { Button } from '@/Components/ui/button';
 import { Link } from '@inertiajs/inertia-react';
 
-const CardPost = () => {
+const PostCard = () => {
   const itemId = 1; // FIXME: Change this to dynamic value
   return (
     <Card>
@@ -55,4 +55,4 @@ const CardPost = () => {
   );
 };
 
-export default CardPost;
+export default PostCard;
