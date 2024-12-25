@@ -29,7 +29,7 @@ const AdminCulture = () => {
       category: 'Category',
       origin: 'Indonesia',
       description: 'Batik merupakan budaya Indonesia...',
-      status: 'Approved',
+      status: 'Published',
     },
     {
       id: 2,
@@ -52,7 +52,7 @@ const AdminCulture = () => {
   ];
 
   const getBadgeVariant = (status) => {
-    if (status === 'Approved') return 'success';
+    if (status === 'Published') return 'success';
     if (status === 'Rejected') return 'destructive';
     return 'outline';
   };

@@ -5,8 +5,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -21,14 +19,14 @@ const Header = () => {
     {
       href: '/admin/cultures',
       label: 'Culture',
-      isActive: url === '/admin/cultures',
+      isActive: url?.includes('cultures'),
     },
     {
       href: '/admin/forums',
       label: 'Forum',
       isActive: url?.includes('forums'),
     },
-    { href: '/admin/users', label: 'Users', isActive: url === '/admin/users' },
+    { href: '/admin/users', label: 'Users', isActive: url?.includes('users') },
   ];
 
   return (
