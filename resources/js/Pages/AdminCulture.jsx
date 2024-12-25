@@ -21,9 +21,15 @@ import { Badge } from '@/Components/ui/badge';
 import PostCreate from '@/Components/PostCreate';
 import { Inertia } from '@inertiajs/inertia';
 import ApproveCulture from '@/Components/ApproveCulture';
+import RejectCulture from '@/Components/RejectCulture';
 
 const AdminCulture = () => {
   const [approveModal, setApproveModal] = useState({
+    isOpen: false,
+    cultureId: null,
+  });
+
+  const [rejectModal, setRejectModal] = useState({
     isOpen: false,
     cultureId: null,
   });
@@ -134,7 +140,15 @@ const AdminCulture = () => {
                     >
                       Approve
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onClick={() =>
+                        setRejectModal({
+                          isOpen: true,
+                          cultureId: culture.id,
+                        })
+                      }
+                    >
                       Reject
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -149,6 +163,12 @@ const AdminCulture = () => {
         isOpen={approveModal.isOpen}
         cultureId={approveModal.cultureId}
         onClose={() => setApproveModal({ isOpen: false, cultureId: null })}
+      />
+
+      <RejectCulture
+        isOpen={rejectModal.isOpen}
+        cultureId={rejectModal.cultureId}
+        onClose={() => setRejectModal({ isOpen: false, cultureId: null })}
       />
     </AdminLayout>
   );
