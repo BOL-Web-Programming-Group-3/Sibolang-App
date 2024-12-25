@@ -19,6 +19,7 @@ import { Button } from '@/Components/ui/button';
 import { EllipsisVertical } from 'lucide-react';
 import { Badge } from '@/Components/ui/badge';
 import ForumCreate from '@/Components/ForumCreate';
+import { Inertia } from '@inertiajs/inertia';
 
 const AdminCulture = () => {
   const listCulture = [
@@ -107,9 +108,18 @@ const AdminCulture = () => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem>View Detail</DropdownMenuItem>
-                    <DropdownMenuItem>Approve</DropdownMenuItem>
-                    <DropdownMenuItem>Reject</DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onClick={() => Inertia.visit('/admin/forums/1')}
+                    >
+                      View Detail
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
+                      Approve
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
+                      Reject
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>

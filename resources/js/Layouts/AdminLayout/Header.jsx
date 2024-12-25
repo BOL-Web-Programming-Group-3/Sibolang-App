@@ -32,9 +32,9 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white dark:border-gray-800 dark:bg-gray-950">
       <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/admin/cultures" className="flex items-center gap-2">
           <Mountain className="h-6 w-6" />
-          <span className="texet-md font-medium">SiBolang</span>
+          <span className="text-md font-medium">SiBolang</span>
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
           {/* Map over the links for desktop navigation */}
@@ -58,7 +58,7 @@ const Header = () => {
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>Administrator</AvatarFallback>
                 </Avatar>
-                <p className="texet-md font-medium">Administrator</p>
+                <p className="text-md font-medium">Administrator</p>
                 <ChevronDown className="h-4 w-4 text-gray-500 dark:text-gray-400" />
               </div>
             </DropdownMenuTrigger>
