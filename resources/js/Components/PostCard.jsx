@@ -6,7 +6,7 @@ import {
   CardHeader,
 } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { EllipsisVertical, MessageCircle } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import { Button } from '@/Components/ui/button';
 import { Link } from '@inertiajs/inertia-react';
 import CommentItem from './CommentItem';
