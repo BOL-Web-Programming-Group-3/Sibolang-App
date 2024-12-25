@@ -18,17 +18,12 @@ const PostCard = ({ isDetail = false }) => {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>Muhammad Faza</AvatarFallback>
-            </Avatar>
-            <p className="text-md font-medium">Muhammad Faza</p>
-          </div>
-          <Button variant="ghost" size="icon">
-            <EllipsisVertical className="w-4 h-4" />
-          </Button>
+        <div className="flex items-center gap-2">
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>Muhammad Faza</AvatarFallback>
+          </Avatar>
+          <p className="text-md font-medium">Muhammad Faza</p>
         </div>
       </CardHeader>
       <ConditionalWrapper
