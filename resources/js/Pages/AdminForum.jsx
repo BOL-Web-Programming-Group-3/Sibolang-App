@@ -1,5 +1,5 @@
 import AdminLayout from '@/Layouts/AdminLayout';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -20,13 +20,25 @@ import { EllipsisVertical } from 'lucide-react';
 import { Badge } from '@/Components/ui/badge';
 import ForumCreate from '@/Components/ForumCreate';
 import { Inertia } from '@inertiajs/inertia';
+import ForumApprove from '@/Components/ForumApprove';
+import ForumReject from '@/Components/ForumReject';
 
-const AdminCulture = () => {
-  const listCulture = [
+const AdminForum = () => {
+  const [approveModal, setApproveModal] = useState({
+    isOpen: false,
+    forumId: null,
+  });
+
+  const [rejectModal, setRejectModal] = useState({
+    isOpen: false,
+    forumId: null,
+  });
+
+  const listForum = [
     {
       id: 1,
       createdBy: 'Ashandi Leonadi',
-      cultureName: 'Batik Indonesia',
+      forumName: 'Batik Indonesia',
       category: 'Category',
       origin: 'Indonesia',
       description: 'Batik merupakan budaya Indonesia...',
@@ -35,7 +47,7 @@ const AdminCulture = () => {
     {
       id: 2,
       createdBy: 'Ashandi Leonadi',
-      cultureName: 'Batik Indonesia',
+      forumName: 'Batik Indonesia',
       category: 'Category',
       origin: 'Indonesia',
       description: 'Batik merupakan budaya Indonesia...',
@@ -44,7 +56,7 @@ const AdminCulture = () => {
     {
       id: 3,
       createdBy: 'Ashandi Leonadi',
-      cultureName: 'Batik Indonesia',
+      forumName: 'Batik Indonesia',
       category: 'Category',
       origin: 'Indonesia',
       description: 'Batik merupakan budaya Indonesia...',
@@ -81,23 +93,23 @@ const AdminCulture = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {listCulture.map((culture, index) => (
-            <TableRow key={culture.id}>
+          {listForum.map((forum, index) => (
+            <TableRow key={forum.id}>
               <TableHead className="font-medium">{index + 1}</TableHead>
               <TableCell>
                 <div className="flex items-center gap-2">
                   <Avatar className="w-8 h-8">
                     <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>{culture.createdBy}</AvatarFallback>
+                    <AvatarFallback>{forum.createdBy}</AvatarFallback>
                   </Avatar>
-                  <p className="texet-md font-medium">{culture.createdBy}</p>
+                  <p className="texet-md font-medium">{forum.createdBy}</p>
                 </div>
               </TableCell>
-              <TableCell>{culture.cultureName}</TableCell>
-              <TableCell>{culture.category}</TableCell>
+              <TableCell>{forum.forumName}</TableCell>
+              <TableCell>{forum.category}</TableCell>
               <TableHead>
-                <Badge variant={getBadgeVariant(culture.status)}>
-                  {culture.status}
+                <Badge variant={getBadgeVariant(forum.status)}>
+                  {forum.status}
                 </Badge>
               </TableHead>
               <TableCell className="text-right">
@@ -114,10 +126,26 @@ const AdminCulture = () => {
                     >
                       View Detail
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onClick={() =>
+                        setApproveModal({
+                          isOpen: true,
+                          forumId: forum.id,
+                        })
+                      }
+                    >
                       Approve
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onClick={() =>
+                        setRejectModal({
+                          isOpen: true,
+                          forumId: forum.id,
+                        })
+                      }
+                    >
                       Reject
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -127,8 +155,20 @@ const AdminCulture = () => {
           ))}
         </TableBody>
       </Table>
+
+      <ForumApprove
+        isOpen={approveModal.isOpen}
+        forumId={approveModal.forumId}
+        onClose={() => setApproveModal({ isOpen: false, forumId: null })}
+      />
+
+      <ForumReject
+        isOpen={rejectModal.isOpen}
+        forumId={rejectModal.forumId}
+        onClose={() => setRejectModal({ isOpen: false, forumId: null })}
+      />
     </AdminLayout>
   );
 };
 
-export default AdminCulture;
+export default AdminForum;
