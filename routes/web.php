@@ -34,14 +34,18 @@ Route::get('/about', function () {
   return Inertia::render('About');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::prefix('admin')->group(function () {
+  Route::get('/', function () {
+      return Inertia::render('AdminCulture');
+  });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+  Route::get('forums', function () {
+      return Inertia::render('AdminForum');
+  });
+
+  Route::get('users', function () {
+      return Inertia::render('AdminUser');
+  });
 });
 
 require __DIR__.'/auth.php';
