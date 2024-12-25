@@ -1,4 +1,5 @@
 import PostCard from '@/Components/PostCard';
+import PostCreate from '@/Components/PostCreate';
 import { Button } from '@/Components/ui/button';
 import HomeLayout from '@/Layouts/HomeLayout';
 
@@ -14,7 +15,7 @@ export default function Home() {
                 Discover and share stories about our rich cultural heritage.
               </span>
             </div>
-            <Button>Create Post</Button>
+            <PostCreate />
           </div>
           <PostCard />
           <PostCard />
