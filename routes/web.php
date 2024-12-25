@@ -35,7 +35,7 @@ Route::get('/about', function () {
 });
 
 Route::prefix('admin')->group(function () {
-  Route::get('/', function () {
+  Route::get('cultures', function () {
       return Inertia::render('AdminCulture');
   });
 

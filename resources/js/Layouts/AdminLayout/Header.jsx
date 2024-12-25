@@ -19,9 +19,9 @@ const Header = () => {
 
   const links = [
     {
-      href: '/admin',
+      href: '/admin/cultures',
       label: 'Culture',
-      isActive: url === '/admin',
+      isActive: url === '/admin/cultures',
     },
     {
       href: '/admin/forums',
