@@ -18,26 +18,26 @@ const Header = () => {
       <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
         <a href="#" className="flex items-center gap-2" prefetch={false}>
           <Mountain className="h-6 w-6" />
-          <span className="text-lg font-medium">SiBolang</span>
+          <span className="texet-md font-medium">SiBolang</span>
         </a>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
           <a
             href="#"
-            className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+            className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 texet-md"
             prefetch={false}
           >
             Culture
           </a>
           <a
             href="#"
-            className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+            className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 texet-md"
             prefetch={false}
           >
             Forum
           </a>
           <a
             href="#"
-            className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+            className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 texet-md"
             prefetch={false}
           >
             About
@@ -51,7 +51,7 @@ const Header = () => {
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>Ashandi Leonadi</AvatarFallback>
                 </Avatar>
-                <p className="text-sm font-medium">Ashandi Leonadi</p>
+                <p className="texet-md font-medium">Ashandi Leonadi</p>
                 <ChevronDown className="h-4 w-4 text-gray-500 dark:text-gray-400" />
               </div>
             </DropdownMenuTrigger>

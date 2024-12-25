@@ -5,7 +5,7 @@ const HomeLayout = ({ children }) => {
   return (
     <div>
       <Header />
-      <main>{children}</main>
+      <main className="container mx-auto max-w-6xl pt-6">{children}</main>
     </div>
   );
 };
