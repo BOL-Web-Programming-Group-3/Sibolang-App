@@ -1,5 +1,5 @@
 import AdminLayout from '@/Layouts/AdminLayout';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -20,8 +20,14 @@ import { EllipsisVertical } from 'lucide-react';
 import { Badge } from '@/Components/ui/badge';
 import PostCreate from '@/Components/PostCreate';
 import { Inertia } from '@inertiajs/inertia';
+import ApproveCulture from '@/Components/ApproveCulture';
 
 const AdminCulture = () => {
+  const [approveModal, setApproveModal] = useState({
+    isOpen: false,
+    cultureId: null,
+  });
+
   const listCulture = [
     {
       id: 1,
@@ -118,7 +124,14 @@ const AdminCulture = () => {
                     >
                       View Detail
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
+                    <DropdownMenuItem
+                      onClick={() =>
+                        setApproveModal({
+                          isOpen: true,
+                          cultureId: culture.id,
+                        })
+                      }
+                    >
                       Approve
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer">
@@ -131,6 +144,12 @@ const AdminCulture = () => {
           ))}
         </TableBody>
       </Table>
+
+      <ApproveCulture
+        isOpen={approveModal.isOpen}
+        cultureId={approveModal.cultureId}
+        onClose={() => setApproveModal({ isOpen: false, cultureId: null })}
+      />
     </AdminLayout>
   );
 };
