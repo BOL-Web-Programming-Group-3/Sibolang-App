@@ -6,49 +6,56 @@ import {
   CardHeader,
 } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { EllipsisVertical } from 'lucide-react';
+import { EllipsisVertical, MessageCircle } from 'lucide-react';
 import { Button } from '@/Components/ui/button';
 import { Link } from '@inertiajs/inertia-react';
 import CommentItem from './CommentItem';
-import { Textarea } from '@/components/ui/textarea';
 import AddComment from './AddComment';
+import ConditionalWrapper from './ConditionalWrapper';
 
 const PostCard = ({ isDetail = false }) => {
   const itemId = 1; // FIXME: Change this to dynamic value
   return (
     <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>Muhammad Faza</AvatarFallback>
-            </Avatar>
-            <p className="text-md font-medium">Muhammad Faza</p>
+      <ConditionalWrapper
+        condition={!isDetail}
+        wrapper={(children) => (
+          <Link href={`/posts/${itemId}`}>{children}</Link>
+        )}
+      >
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>Muhammad Faza</AvatarFallback>
+              </Avatar>
+              <p className="text-md font-medium">Muhammad Faza</p>
+            </div>
+            <Button variant="ghost" size="icon">
+              <EllipsisVertical className="w-4 h-4" />
+            </Button>
           </div>
-          <Button variant="ghost" size="icon">
-            <EllipsisVertical className="w-4 h-4" />
-          </Button>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="rounded overflow-hidden w-full h-96">
-          <img
-            src="https://www.batiksimonet.id/wp-content/uploads/2024/02/4c073744-3d6c-4bb1-97f6-4aa35f8c0d47.webp"
-            className="w-full h-full"
-          />
-        </div>
-        <div className="mt-3">
-          <p className="mb-3">Muhammad Faza</p>
-          <p>
-            Tari Kecak adalah salah satu tarian tradisional paling terkenal dari
-            Bali. Tarian ini tidak menggunakan alat musik, melainkan suara
-            paduan suara "cak cak cak" dari para penarinya. Tari Kecak biasanya
-            menggambarkan cerita epik Ramayana, terutama kisah tentang Hanuman
-            dan penculikan Dewi Sinta oleh Rahwana.
-          </p>
-        </div>
-      </CardContent>
+        </CardHeader>
+        <CardContent>
+          <div className="rounded overflow-hidden w-full h-96">
+            <img
+              src="https://www.batiksimonet.id/wp-content/uploads/2024/02/4c073744-3d6c-4bb1-97f6-4aa35f8c0d47.webp"
+              className="w-full h-full"
+            />
+          </div>
+          <div className="mt-3">
+            <p className="mb-3">Muhammad Faza</p>
+            <p>
+              Tari Kecak adalah salah satu tarian tradisional paling terkenal
+              dari Bali. Tarian ini tidak menggunakan alat musik, melainkan
+              suara paduan suara "cak cak cak" dari para penarinya. Tari Kecak
+              biasanya menggambarkan cerita epik Ramayana, terutama kisah
+              tentang Hanuman dan penculikan Dewi Sinta oleh Rahwana.
+            </p>
+          </div>
+        </CardContent>
+      </ConditionalWrapper>
       <CardFooter className="flex flex-col items-start">
         {isDetail ? (
           <>
@@ -61,9 +68,16 @@ const PostCard = ({ isDetail = false }) => {
             </div>
           </>
         ) : (
-          <Button variant="outline">
-            <Link href={`/posts/${itemId}`}>View Detail</Link>
-          </Button>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Link href={`/posts/${itemId}`}>
+                <Button variant="ghost" size="icon">
+                  <MessageCircle className="w-4 h-4" />
+                </Button>
+              </Link>
+              <p>3</p>
+            </div>
+          </div>
         )}
       </CardFooter>
     </Card>
