@@ -8,8 +8,10 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { EllipsisVertical } from 'lucide-react';
 import { Button } from '@/Components/ui/button';
+import { Link } from '@inertiajs/inertia-react';
 
 const CardPost = () => {
+  const itemId = 1; // FIXME: Change this to dynamic value
   return (
     <Card>
       <CardHeader>
@@ -45,7 +47,9 @@ const CardPost = () => {
         </div>
       </CardContent>
       <CardFooter>
-        <Button variant="outline">View Detail</Button>
+        <Button variant="outline">
+          <Link href={`/posts/${itemId}`}>View Detail</Link>
+        </Button>
       </CardFooter>
     </Card>
   );

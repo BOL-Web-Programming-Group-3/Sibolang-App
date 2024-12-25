@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+// This is default page for the application, user can view all posts here
 Route::get('/', function () {
     return Inertia::render('Home', [
         'canLogin' => Route::has('login'),
@@ -12,6 +13,13 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
+});
+
+// This is the page where user can view the detail of a post
+Route::get('/posts/{id}', function ($id) {
+  return Inertia::render('PostDetail', [
+      'id' => $id,
+  ]);
 });
 
 Route::get('/dashboard', function () {
