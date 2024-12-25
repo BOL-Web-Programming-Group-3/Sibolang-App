@@ -1,6 +1,5 @@
 import PostCard from '@/Components/PostCard';
 import PostCreate from '@/Components/PostCreate';
-import { Button } from '@/Components/ui/button';
 import HomeLayout from '@/Layouts/HomeLayout';
 
 export default function Home() {
