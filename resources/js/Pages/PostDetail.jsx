@@ -6,7 +6,7 @@ export default function PostDetail() {
     <HomeLayout>
       <div className="flex flex-col justify-center items-center">
         <div className="max-w-3xl w-full flex flex-col gap-4">
-          <PostCard />
+          <PostCard isDetail />
         </div>
       </div>
     </HomeLayout>

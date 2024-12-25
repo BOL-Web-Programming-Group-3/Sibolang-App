@@ -9,8 +9,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { EllipsisVertical } from 'lucide-react';
 import { Button } from '@/Components/ui/button';
 import { Link } from '@inertiajs/inertia-react';
+import CommentItem from './CommentItem';
 
-const PostCard = () => {
+const PostCard = ({ isDetail = false }) => {
   const itemId = 1; // FIXME: Change this to dynamic value
   return (
     <Card>
@@ -36,8 +37,8 @@ const PostCard = () => {
           />
         </div>
         <div className="mt-3">
-          <p className="text-sm font-medium mb-3">Muhammad Faza</p>
-          <p className="">
+          <p className="mb-3">Muhammad Faza</p>
+          <p>
             Tari Kecak adalah salah satu tarian tradisional paling terkenal dari
             Bali. Tarian ini tidak menggunakan alat musik, melainkan suara
             paduan suara "cak cak cak" dari para penarinya. Tari Kecak biasanya
@@ -46,10 +47,21 @@ const PostCard = () => {
           </p>
         </div>
       </CardContent>
-      <CardFooter>
-        <Button variant="outline">
-          <Link href={`/posts/${itemId}`}>View Detail</Link>
-        </Button>
+      <CardFooter className="flex flex-col items-start">
+        {isDetail ? (
+          <>
+            <div className="border-0 border-t border-solid border-gray-200 w-full" />
+            <div className="mt-4 flex flex-col gap-6">
+              <CommentItem />
+              <CommentItem />
+              <CommentItem />
+            </div>
+          </>
+        ) : (
+          <Button variant="outline">
+            <Link href={`/posts/${itemId}`}>View Detail</Link>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
