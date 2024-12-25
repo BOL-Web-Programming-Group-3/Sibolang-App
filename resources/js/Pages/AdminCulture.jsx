@@ -18,6 +18,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/Components/ui/button';
 import { EllipsisVertical } from 'lucide-react';
 import { Badge } from '@/Components/ui/badge';
+import PostCreate from '@/Components/PostCreate';
 
 const AdminCulture = () => {
   const listCulture = [
@@ -58,6 +59,13 @@ const AdminCulture = () => {
 
   return (
     <AdminLayout>
+      <div className="flex justify-between items-center mb-4">
+        <div>
+          <p className="text-lg font-medium">Posts</p>
+          <span>Manage and review all user-submitted posts in the system.</span>
+        </div>
+        <PostCreate />
+      </div>
       <Table>
         <TableHeader>
           <TableRow>
