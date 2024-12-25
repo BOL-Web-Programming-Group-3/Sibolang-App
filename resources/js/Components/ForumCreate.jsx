@@ -29,7 +29,7 @@ const FormSchema = z.object({
   }),
 });
 
-const PostCreate = () => {
+const ForumCreate = () => {
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -45,16 +45,16 @@ const PostCreate = () => {
     <div>
       <Dialog>
         <DialogTrigger>
-          <Button>Create Post</Button>
+          <Button>Create Forum</Button>
         </DialogTrigger>
         <DialogContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <DialogHeader>
-                <DialogTitle>Create Post</DialogTitle>
+                <DialogTitle>Create Forum</DialogTitle>
                 <DialogDescription>
-                  Express your insights and stories about cultural traditions,
-                  heritage, and art.
+                  Start a new discussion to explore and share perspectives on
+                  culture and heritage.
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
@@ -63,10 +63,10 @@ const PostCreate = () => {
                   name="username"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Name</FormLabel>
+                      <FormLabel>Topic</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Enter the name of the cultural art"
+                          placeholder="Enter the topic of discussion"
                           {...field}
                         />
                       </FormControl>
@@ -80,44 +80,10 @@ const PostCreate = () => {
                   name="username"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Category</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Select the category of the cultural art"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Origin</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter the origin of the cultural art"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
+                      <FormLabel>Content</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Provide a brief description of the cultural art"
+                          placeholder="Write the content of your discussion"
                           className="min-h-24"
                           {...field}
                         />
@@ -128,7 +94,7 @@ const PostCreate = () => {
                 />
               </div>
               <DialogFooter>
-                <Button type="submit">Create Post</Button>
+                <Button type="submit">Create Forum</Button>
               </DialogFooter>
             </form>
           </Form>
@@ -138,4 +104,4 @@ const PostCreate = () => {
   );
 };
 
-export default PostCreate;
+export default ForumCreate;

@@ -1,4 +1,5 @@
 import ForumCard from '@/Components/ForumCard';
+import ForumCreate from '@/Components/ForumCreate';
 import { Button } from '@/Components/ui/button';
 import HomeLayout from '@/Layouts/HomeLayout';
 
@@ -14,7 +15,7 @@ export default function Forum() {
                 Discuss culture, traditions, and heritage with community.
               </span>
             </div>
-            <Button>Create Forum</Button>
+            <ForumCreate />
           </div>
           <ForumCard />
         </div>
