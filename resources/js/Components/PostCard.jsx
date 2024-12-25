@@ -17,26 +17,26 @@ const PostCard = ({ isDetail = false }) => {
   const itemId = 1; // FIXME: Change this to dynamic value
   return (
     <Card>
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>Muhammad Faza</AvatarFallback>
+            </Avatar>
+            <p className="text-md font-medium">Muhammad Faza</p>
+          </div>
+          <Button variant="ghost" size="icon">
+            <EllipsisVertical className="w-4 h-4" />
+          </Button>
+        </div>
+      </CardHeader>
       <ConditionalWrapper
         condition={!isDetail}
         wrapper={(children) => (
           <Link href={`/posts/${itemId}`}>{children}</Link>
         )}
       >
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>Muhammad Faza</AvatarFallback>
-              </Avatar>
-              <p className="text-md font-medium">Muhammad Faza</p>
-            </div>
-            <Button variant="ghost" size="icon">
-              <EllipsisVertical className="w-4 h-4" />
-            </Button>
-          </div>
-        </CardHeader>
         <CardContent>
           <div className="rounded overflow-hidden w-full h-96">
             <img

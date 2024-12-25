@@ -1,7 +1,7 @@
 import ForumCard from '@/Components/ForumCard';
 import HomeLayout from '@/Layouts/HomeLayout';
 
-export default function Forums() {
+export default function Forum() {
   return (
     <HomeLayout>
       <div className="flex flex-col justify-center items-center">

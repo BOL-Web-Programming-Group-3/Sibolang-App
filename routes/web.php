@@ -21,7 +21,13 @@ Route::get('/posts/{id}', function ($id) {
 });
 
 Route::get('/forums', function () {
-  return Inertia::render('Forums');
+  return Inertia::render('Forum');
+});
+
+Route::get('/forums/{id}', function ($id) {
+  return Inertia::render('ForumDetail', [
+      'id' => $id,
+  ]);
 });
 
 Route::get('/about', function () {

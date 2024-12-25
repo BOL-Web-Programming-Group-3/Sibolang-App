@@ -14,8 +14,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/Components/ui/button';
 import { Link } from '@inertiajs/inertia-react';
-import CommentItem from './CommentItem';
-import AddComment from './AddComment';
+import ConditionalWrapper from './ConditionalWrapper';
 
 const ForumCard = ({ isDetail = false }) => {
   const itemId = 1; // FIXME: Change this to dynamic value
@@ -35,19 +34,26 @@ const ForumCard = ({ isDetail = false }) => {
           </Button>
         </div>
       </CardHeader>
-      <CardContent>
-        <div>
-          <p className="font-medium mb-3">
-            Bagaimana Cara Melibatkan Generasi Muda dalam Pelestarian Tari
-            Tradisional?
-          </p>
-          <p>
-            Generasi muda saat ini lebih tertarik dengan budaya populer. Apa
-            langkah konkret yang bisa dilakukan untuk menarik perhatian mereka
-            pada seni tradisional seperti Tari Kecak atau Tari Saman?
-          </p>
-        </div>
-      </CardContent>
+      <ConditionalWrapper
+        condition={!isDetail}
+        wrapper={(children) => (
+          <Link href={`/forums/${itemId}`}>{children}</Link>
+        )}
+      >
+        <CardContent>
+          <div>
+            <p className="font-medium mb-3">
+              Bagaimana Cara Melibatkan Generasi Muda dalam Pelestarian Tari
+              Tradisional?
+            </p>
+            <p>
+              Generasi muda saat ini lebih tertarik dengan budaya populer. Apa
+              langkah konkret yang bisa dilakukan untuk menarik perhatian mereka
+              pada seni tradisional seperti Tari Kecak atau Tari Saman?
+            </p>
+          </div>
+        </CardContent>
+      </ConditionalWrapper>
       <CardFooter className="flex flex-col items-start">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
@@ -62,12 +68,16 @@ const ForumCard = ({ isDetail = false }) => {
             </Button>
             <p>3</p>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon">
-              <MessageCircle className="w-4 h-4" />
-            </Button>
-            <p>3</p>
-          </div>
+          {!isDetail && (
+            <div className="flex items-center gap-2">
+              <Link href={`/forums/${itemId}`}>
+                <Button variant="ghost" size="icon">
+                  <MessageCircle className="w-4 h-4" />
+                </Button>
+              </Link>
+              <p>3</p>
+            </div>
+          )}
         </div>
       </CardFooter>
     </Card>

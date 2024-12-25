@@ -23,7 +23,7 @@ const Header = () => {
       label: 'Culture',
       isActive: url === '/' || url?.includes('posts'),
     },
-    { href: '/forums', label: 'Forum', isActive: url === '/forums' },
+    { href: '/forums', label: 'Forum', isActive: url?.includes('forums') },
     { href: '/about', label: 'About', isActive: url === '/about' },
   ];
 
