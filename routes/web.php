@@ -43,10 +43,16 @@ Route::prefix('admin')->group(function () {
     return Inertia::render('AdminCultureDetail', [
         'id' => $id,
     ]);
-});
+  });
 
   Route::get('forums', function () {
       return Inertia::render('AdminForum');
+  });
+
+  Route::get('forums/{id}', function ($id) {
+    return Inertia::render('AdminForumDetail', [
+        'id' => $id,
+    ]);
   });
 
   Route::get('users', function () {

@@ -18,17 +18,36 @@ import ConditionalWrapper from './ConditionalWrapper';
 import CommentItem from './CommentItem';
 import AddComment from './AddComment';
 
-const ForumCard = ({ isDetail = false }) => {
+const ForumCard = ({ isDetail = false, isAdmin = false }) => {
   const itemId = 1; // FIXME: Change this to dynamic value
+
+  const getBadgeVariant = (status) => {
+    if (status === 'Published') return 'success';
+    if (status === 'Rejected') return 'destructive';
+    return 'outline';
+  };
+
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center gap-2">
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>Muhammad Faza</AvatarFallback>
-          </Avatar>
-          <p className="text-md font-medium">Muhammad Faza</p>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>Muhammad Faza</AvatarFallback>
+            </Avatar>
+            <p className="text-md font-medium">Muhammad Faza</p>
+          </div>
+          {isAdmin && (
+            <div className="flex items-center gap-2">
+              {/* <Badge variant={getBadgeVariant('Published')}>Published</Badge>
+                      <Badge variant={getBadgeVariant('Rejected')}>Rejected</Badge> */}
+              <Button size="sm">Approve</Button>
+              <Button size="sm" variant="destructive">
+                Reject
+              </Button>
+            </div>
+          )}
         </div>
       </CardHeader>
       <ConditionalWrapper
