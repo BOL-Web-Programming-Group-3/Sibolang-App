@@ -1,4 +1,5 @@
 import ForumCard from '@/Components/ForumCard';
+import { Button } from '@/Components/ui/button';
 import HomeLayout from '@/Layouts/HomeLayout';
 
 export default function Forum() {
@@ -6,6 +7,15 @@ export default function Forum() {
     <HomeLayout>
       <div className="flex flex-col justify-center items-center">
         <div className="max-w-3xl w-full flex flex-col gap-4">
+          <div className="flex justify-between items-center gap-6">
+            <div>
+              <p className="text-lg font-medium">Forums</p>
+              <span>
+                Discuss culture, traditions, and heritage with community.
+              </span>
+            </div>
+            <Button>Create Forum</Button>
+          </div>
           <ForumCard />
         </div>
       </div>
