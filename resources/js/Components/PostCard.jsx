@@ -10,6 +10,8 @@ import { EllipsisVertical } from 'lucide-react';
 import { Button } from '@/Components/ui/button';
 import { Link } from '@inertiajs/inertia-react';
 import CommentItem from './CommentItem';
+import { Textarea } from '@/components/ui/textarea';
+import AddComment from './AddComment';
 
 const PostCard = ({ isDetail = false }) => {
   const itemId = 1; // FIXME: Change this to dynamic value
@@ -55,6 +57,7 @@ const PostCard = ({ isDetail = false }) => {
               <CommentItem />
               <CommentItem />
               <CommentItem />
+              <AddComment />
             </div>
           </>
         ) : (
