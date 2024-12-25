@@ -15,6 +15,8 @@ import {
 import { Button } from '@/Components/ui/button';
 import { Link } from '@inertiajs/inertia-react';
 import ConditionalWrapper from './ConditionalWrapper';
+import CommentItem from './CommentItem';
+import AddComment from './AddComment';
 
 const ForumCard = ({ isDetail = false }) => {
   const itemId = 1; // FIXME: Change this to dynamic value
@@ -79,6 +81,18 @@ const ForumCard = ({ isDetail = false }) => {
             </div>
           )}
         </div>
+
+        {isDetail && (
+          <>
+            <div className="border-0 border-t border-solid border-gray-200 w-full mt-4" />
+            <div className="mt-4 flex flex-col gap-6">
+              <CommentItem />
+              <CommentItem />
+              <CommentItem />
+              <AddComment />
+            </div>
+          </>
+        )}
       </CardFooter>
     </Card>
   );
