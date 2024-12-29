@@ -2,7 +2,8 @@ import PostCard from '@/Components/PostCard';
 import PostCreate from '@/Components/PostCreate';
 import HomeLayout from '@/Layouts/HomeLayout';
 
-export default function Home() {
+export default function Home({ posts }) {
+  console.log('posts', posts);
   return (
     <HomeLayout>
       <div className="flex flex-col justify-center items-center">
@@ -16,8 +17,8 @@ export default function Home() {
             </div>
             <PostCreate />
           </div>
-          <PostCard />
-          <PostCard />
+          {posts?.length > 0 &&
+            posts?.map((post) => <PostCard key={post?.id} post={post} />)}
         </div>
       </div>
     </HomeLayout>

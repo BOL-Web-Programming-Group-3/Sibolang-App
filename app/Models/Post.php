@@ -22,4 +22,10 @@ class Post extends Model
         'image',
         'created_by',
     ];
+
+    // Define the relationship between Post and User
+    public function user()
+    {
+      return $this->belongsTo(User::class, 'created_by'); // 'created_by' is the foreign key
+    }
 }
