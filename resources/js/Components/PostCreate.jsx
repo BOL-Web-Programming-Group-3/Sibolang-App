@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import InputLabel from '@/Components/InputLabel';
 import InputError from '@/Components/InputError';
 import { Input } from '@/Components/ui/input';
@@ -13,33 +14,35 @@ import {
 } from '@/Components/ui/dialog';
 import { useForm } from '@inertiajs/react';
 import { Button } from '@/Components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { useToast } from '@/hooks/use-toast';
 
 export default function PostCreate() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { data, setData, post, processing, errors, reset } = useForm({
     title: '',
     content: '',
   });
+  const { toast } = useToast();
 
   const submit = (e) => {
     e.preventDefault();
+
     post(route('posts.store'), {
-      onFinish: () => reset(),
+      onSuccess: () => {
+        reset();
+        toast({
+          description: 'Post created successfully!',
+        });
+        setIsModalOpen(false); // Close the modal on success
+      },
     });
   };
 
   return (
     <div>
-      <Dialog>
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogTrigger>
-          <Button>Create Post</Button>
+          <Button onClick={() => setIsModalOpen(true)}>Create Post</Button>
         </DialogTrigger>
         <DialogContent>
           <form onSubmit={submit}>
@@ -89,7 +92,7 @@ export default function PostCreate() {
 
             <DialogFooter>
               <Button type="submit" disabled={processing}>
-                Create Post
+                {processing ? 'Submitting...' : 'Create Post'}
               </Button>
             </DialogFooter>
           </form>
