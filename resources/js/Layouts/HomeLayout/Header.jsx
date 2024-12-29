@@ -59,9 +59,9 @@ const Header = () => {
                 <div className="flex items-center gap-2">
                   <Avatar>
                     <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>Ashandi Leonadi</AvatarFallback>
+                    <AvatarFallback>{user?.name}</AvatarFallback>
                   </Avatar>
-                  <p className="texet-md font-medium">Ashandi Leonadi</p>
+                  <p className="texet-md font-medium">{user?.name}</p>
                   <ChevronDown className="h-4 w-4 text-gray-500 dark:text-gray-400" />
                 </div>
               </DropdownMenuTrigger>
