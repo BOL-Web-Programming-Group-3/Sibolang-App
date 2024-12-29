@@ -11,9 +11,15 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ChevronDown, MenuIcon, Mountain } from 'lucide-react';
 import { Link } from '@inertiajs/inertia-react';
 import { usePage } from '@inertiajs/react';
+import { Link as LinkIntertia } from '@inertiajs/react';
 
 const Header = () => {
-  const { url } = usePage(); // Get the current URL
+  const {
+    url,
+    props: {
+      auth: { user },
+    },
+  } = usePage(); // Get the current URL
 
   const links = [
     {
@@ -47,21 +53,34 @@ const Header = () => {
           })}
         </nav>
         <div className="flex items-center gap-4">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <div className="flex items-center gap-2">
-                <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>Ashandi Leonadi</AvatarFallback>
-                </Avatar>
-                <p className="texet-md font-medium">Ashandi Leonadi</p>
-                <ChevronDown className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>Logout</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <div className="flex items-center gap-2">
+                  <Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>Ashandi Leonadi</AvatarFallback>
+                  </Avatar>
+                  <p className="texet-md font-medium">Ashandi Leonadi</p>
+                  <ChevronDown className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <LinkIntertia
+                  href={route('logout')}
+                  method="post"
+                  as="button"
+                  className="w-full"
+                >
+                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                </LinkIntertia>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link href="/login">
+              <Button variant="ghost">Login</Button>
+            </Link>
+          )}
           <Sheet>
             <SheetTrigger asChild>
               <Button
