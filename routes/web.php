@@ -37,27 +37,27 @@ Route::get('/about', function () {
 Route::prefix('admin')->group(function () {
   Route::get('cultures', function () {
       return Inertia::render('AdminCulture');
-  });
+  })->middleware(['auth', 'verified'])->name('dashboard');
 
   Route::get('cultures/{id}', function ($id) {
     return Inertia::render('AdminCultureDetail', [
         'id' => $id,
     ]);
-  });
+  })->middleware(['auth', 'verified'])->name('dashboard');
 
   Route::get('forums', function () {
       return Inertia::render('AdminForum');
-  });
+  })->middleware(['auth', 'verified'])->name('dashboard');
 
   Route::get('forums/{id}', function ($id) {
     return Inertia::render('AdminForumDetail', [
         'id' => $id,
     ]);
-  });
+  })->middleware(['auth', 'verified'])->name('dashboard');
 
   Route::get('users', function () {
       return Inertia::render('AdminUser');
-  });
+  })->middleware(['auth', 'verified'])->name('dashboard');
 
   Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
