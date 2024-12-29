@@ -1,24 +1,12 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PostController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-Route::get('/posts/{id}', function ($id) {
-  return Inertia::render('PostDetail', [
-      'id' => $id,
-  ]);
-});
+Route::resource('posts', PostController::class);
 
 Route::get('/forums', function () {
   return Inertia::render('Forum');

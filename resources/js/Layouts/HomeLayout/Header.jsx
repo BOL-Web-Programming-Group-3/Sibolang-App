@@ -23,9 +23,9 @@ const Header = () => {
 
   const links = [
     {
-      href: '/',
+      href: '/posts',
       label: 'Culture',
-      isActive: url === '/' || url?.includes('posts'),
+      isActive: url?.includes('posts'),
     },
     { href: '/forums', label: 'Forum', isActive: url?.includes('forums') },
     { href: '/about', label: 'About', isActive: url === '/about' },

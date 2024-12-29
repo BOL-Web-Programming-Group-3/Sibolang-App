@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class PostController extends Controller
 {
@@ -15,10 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        // Retrieve all posts with pagination
-        $posts = Post::paginate(10); // Show 10 posts per page
-
-        return view('posts.index', compact('posts'));
+      return Inertia::render('Post');
     }
 
     /**
@@ -72,7 +70,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+      return Inertia::render('PostDetail', [
+        'post' => $post,
+    ]);
     }
 
     /**
