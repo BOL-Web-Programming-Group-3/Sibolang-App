@@ -14,9 +14,7 @@ import AddComment from './AddComment';
 import ConditionalWrapper from './ConditionalWrapper';
 
 const PostCard = ({ isDetail = false, isAdmin = false, post }) => {
-  const itemId = 1; // FIXME: Change this to dynamic value
-
-  const { status, user, content, image } = post || {};
+  const { id, status, user, content, image } = post || {};
 
   const getBadgeVariant = () => {
     if (status === 'published') return 'success';
@@ -58,9 +56,7 @@ const PostCard = ({ isDetail = false, isAdmin = false, post }) => {
       </CardHeader>
       <ConditionalWrapper
         condition={!isDetail}
-        wrapper={(children) => (
-          <Link href={`/posts/${itemId}`}>{children}</Link>
-        )}
+        wrapper={(children) => <Link href={`/posts/${id}`}>{children}</Link>}
       >
         <CardContent>
           {image && (
@@ -91,7 +87,7 @@ const PostCard = ({ isDetail = false, isAdmin = false, post }) => {
         ) : (
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <Link href={`/posts/${itemId}`}>
+              <Link href={`/posts/${id}`}>
                 <Button variant="ghost" size="icon">
                   <MessageCircle className="w-4 h-4" />
                 </Button>
