@@ -1,5 +1,7 @@
-import React from 'react';
-import { Button } from './ui/button';
+import InputLabel from '@/Components/InputLabel';
+import InputError from '@/Components/InputError';
+import { Input } from '@/Components/ui/input';
+import { Textarea } from '@/Components/ui/textarea';
 import {
   Dialog,
   DialogContent,
@@ -9,10 +11,8 @@ import {
   DialogTrigger,
   DialogFooter,
 } from '@/Components/ui/dialog';
-import { Input } from '@/Components/ui/input';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { useForm } from '@inertiajs/react';
+import { Button } from '@/Components/ui/button';
 import {
   Form,
   FormControl,
@@ -21,24 +21,18 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Textarea } from './ui/textarea';
 
-const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-});
-
-const PostCreate = () => {
-  const form = useForm({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      username: '',
-    },
+export default function PostCreate() {
+  const { data, setData, post, processing, errors, reset } = useForm({
+    title: '',
+    content: '',
   });
 
-  const onSubmit = (data) => {
-    //
+  const submit = (e) => {
+    e.preventDefault();
+    post(route('posts.store'), {
+      onFinish: () => reset(),
+    });
   };
 
   return (
@@ -48,94 +42,59 @@ const PostCreate = () => {
           <Button>Create Post</Button>
         </DialogTrigger>
         <DialogContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <DialogHeader>
-                <DialogTitle>Create Post</DialogTitle>
-                <DialogDescription>
-                  Express your insights and stories about cultural traditions,
-                  heritage, and art.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter the name of the cultural art"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+          <form onSubmit={submit}>
+            <DialogHeader>
+              <DialogTitle>Create Post</DialogTitle>
+              <DialogDescription>
+                Express your insights and stories about cultural traditions,
+                heritage, and art.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              {/* Title Field */}
+              <div>
+                <InputLabel htmlFor="title" value="Title" />
+
+                <Input
+                  id="title"
+                  type="text"
+                  name="title"
+                  value={data.title}
+                  className="mt-1 block w-full"
+                  autoComplete="off"
+                  onChange={(e) => setData('title', e.target.value)}
+                  placeholder="Enter the title of the cultural art"
                 />
 
-                {/* <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Category</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Select the category of the cultural art"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Origin</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter the origin of the cultural art"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                /> */}
-
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Provide a brief description of the cultural art"
-                          className="min-h-24"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <InputError message={errors.title} className="mt-2" />
               </div>
-              <DialogFooter>
-                <Button type="submit">Create Post</Button>
-              </DialogFooter>
-            </form>
-          </Form>
+
+              {/* Content Field */}
+              <div>
+                <InputLabel htmlFor="content" value="Content" />
+
+                <Textarea
+                  id="content"
+                  name="content"
+                  value={data.content}
+                  placeholder="Provide a brief description of the cultural art"
+                  className="mt-1 block w-full"
+                  autoComplete="off"
+                  onChange={(e) => setData('content', e.target.value)}
+                />
+
+                <InputError message={errors.content} className="mt-2" />
+              </div>
+            </div>
+
+            <DialogFooter>
+              <Button type="submit" disabled={processing}>
+                Create Post
+              </Button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
     </div>
   );
-};
-
-export default PostCreate;
+}

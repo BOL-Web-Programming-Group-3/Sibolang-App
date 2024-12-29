@@ -1,10 +1,12 @@
+import { cn } from '@/lib/utils';
+
 export default function InputError({ message, className = '', ...props }) {
-    return message ? (
-        <p
-            {...props}
-            className={'text-sm text-red-600 ' + className}
-        >
-            {message}
-        </p>
-    ) : null;
+  return message ? (
+    <p
+      className={cn('text-[0.8rem] font-medium text-destructive', className)}
+      {...props}
+    >
+      {message}
+    </p>
+  ) : null;
 }
