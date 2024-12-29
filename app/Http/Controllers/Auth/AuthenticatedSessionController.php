@@ -31,9 +31,13 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        // Check if the logged-in user's email is 'administrator@sibolang.com'
+        if (Auth::user()->email === 'administrator@sibolang.com') {
+          return redirect('/admin/cultures'); // Redirect to admin page
+        }
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // Redirect other users to the home page
+        return redirect('/');
     }
 
     /**
