@@ -75,7 +75,7 @@ const PostCreate = () => {
                   )}
                 />
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="username"
                   render={({ field }) => (
@@ -107,7 +107,7 @@ const PostCreate = () => {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 <FormField
                   control={form.control}
