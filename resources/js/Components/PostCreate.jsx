@@ -21,13 +21,22 @@ export default function PostCreate() {
   const { data, setData, post, processing, errors, reset } = useForm({
     title: '',
     content: '',
+    image: null, // Add image field to the form data
   });
   const { toast } = useToast();
 
   const submit = (e) => {
     e.preventDefault();
 
+    const formData = new FormData(); // Create a FormData object
+    formData.append('title', data.title);
+    formData.append('content', data.content);
+    if (data.image) {
+      formData.append('image', data.image); // Append the image file if it exists
+    }
+
     post(route('posts.store'), {
+      data: formData, // Pass the FormData object
       onSuccess: () => {
         reset();
         toast({
@@ -57,7 +66,6 @@ export default function PostCreate() {
               {/* Title Field */}
               <div>
                 <InputLabel htmlFor="title" value="Title" />
-
                 <Input
                   id="title"
                   type="text"
@@ -68,14 +76,12 @@ export default function PostCreate() {
                   onChange={(e) => setData('title', e.target.value)}
                   placeholder="Enter the title of the cultural art"
                 />
-
                 <InputError message={errors.title} className="mt-2" />
               </div>
 
               {/* Content Field */}
               <div>
                 <InputLabel htmlFor="content" value="Content" />
-
                 <Textarea
                   id="content"
                   name="content"
@@ -85,8 +91,21 @@ export default function PostCreate() {
                   autoComplete="off"
                   onChange={(e) => setData('content', e.target.value)}
                 />
-
                 <InputError message={errors.content} className="mt-2" />
+              </div>
+
+              {/* Image Field */}
+              <div>
+                <InputLabel htmlFor="image" value="Image" />
+                <Input
+                  id="image"
+                  type="file"
+                  name="image"
+                  className="mt-1 block w-full"
+                  autoComplete="off"
+                  onChange={(e) => setData('image', e.target.files[0])}
+                />
+                <InputError message={errors.image} className="mt-2" />
               </div>
             </div>
 
