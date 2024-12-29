@@ -23,7 +23,8 @@ import { Inertia } from '@inertiajs/inertia';
 import ApproveCulture from '@/Components/ApproveCulture';
 import RejectCulture from '@/Components/RejectCulture';
 
-const AdminCulture = () => {
+const AdminPost = ({ posts }) => {
+  console.log('posts', posts);
   const [approveModal, setApproveModal] = useState({
     isOpen: false,
     cultureId: null,
@@ -65,9 +66,15 @@ const AdminCulture = () => {
   ];
 
   const getBadgeVariant = (status) => {
-    if (status === 'Published') return 'success';
-    if (status === 'Rejected') return 'destructive';
+    if (status === 'published') return 'success';
+    if (status === 'rejected') return 'destructive';
     return 'outline';
+  };
+
+  const getBadgeText = (status) => {
+    if (status === 'published') return 'Published';
+    if (status === 'rejected') return 'Rejected';
+    return 'Pending';
   };
 
   return (
@@ -85,35 +92,31 @@ const AdminCulture = () => {
             <TableHead>No.</TableHead>
             <TableHead>Created By</TableHead>
             <TableHead>Culture Name</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead>Origin</TableHead>
             <TableHead>Description</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {listCulture.map((culture, index) => (
-            <TableRow key={culture.id}>
+          {posts?.map((post, index) => (
+            <TableRow key={post?.id}>
               <TableHead className="font-medium">{index + 1}</TableHead>
               <TableCell>
                 <div className="flex items-center gap-2">
                   <Avatar className="w-8 h-8">
                     <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>{culture.createdBy}</AvatarFallback>
+                    <AvatarFallback>{post?.user?.name}</AvatarFallback>
                   </Avatar>
-                  <p className="texet-md font-medium">{culture.createdBy}</p>
+                  <p className="texet-md font-medium">{post?.user?.name}</p>
                 </div>
               </TableCell>
-              <TableCell>{culture.cultureName}</TableCell>
-              <TableCell>{culture.category}</TableCell>
-              <TableCell>{culture.origin}</TableCell>
+              <TableCell>{post?.title}</TableCell>
               <TableCell className="max-w-[300px]">
-                {culture.description}
+                {post?.content.slice(0, 40)}...
               </TableCell>
               <TableHead>
-                <Badge variant={getBadgeVariant(culture.status)}>
-                  {culture.status}
+                <Badge variant={getBadgeVariant(post?.status)}>
+                  {getBadgeText(post?.status)}
                 </Badge>
               </TableHead>
               <TableCell className="text-right">
@@ -126,7 +129,7 @@ const AdminCulture = () => {
                   <DropdownMenuContent>
                     <DropdownMenuItem
                       className="cursor-pointer"
-                      onClick={() => Inertia.visit('/admin/cultures/1')}
+                      onClick={() => Inertia.visit(`/admin/posts/${post?.id}`)}
                     >
                       View Detail
                     </DropdownMenuItem>
@@ -134,7 +137,7 @@ const AdminCulture = () => {
                       onClick={() =>
                         setApproveModal({
                           isOpen: true,
-                          cultureId: culture.id,
+                          cultureId: post?.id,
                         })
                       }
                     >
@@ -145,7 +148,7 @@ const AdminCulture = () => {
                       onClick={() =>
                         setRejectModal({
                           isOpen: true,
-                          cultureId: culture.id,
+                          cultureId: post?.id,
                         })
                       }
                     >
@@ -174,4 +177,4 @@ const AdminCulture = () => {
   );
 };
 
-export default AdminCulture;
+export default AdminPost;

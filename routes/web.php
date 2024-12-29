@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostAdminController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,15 +24,17 @@ Route::get('/about', function () {
 });
 
 Route::prefix('admin')->group(function () {
-  Route::get('cultures', function () {
-      return Inertia::render('AdminCulture');
-  })->middleware(['auth', 'verified'])->name('dashboard');
+  Route::resource('posts', PostAdminController::class);
 
-  Route::get('cultures/{id}', function ($id) {
-    return Inertia::render('AdminCultureDetail', [
-        'id' => $id,
-    ]);
-  })->middleware(['auth', 'verified'])->name('dashboard');
+  // Route::get('posts', function () {
+  //     return Inertia::render('AdminCulture');
+  // })->middleware(['auth', 'verified'])->name('dashboard');
+
+  // Route::get('posts/{id}', function ($id) {
+  //   return Inertia::render('AdminCultureDetail', [
+  //       'id' => $id,
+  //   ]);
+  // })->middleware(['auth', 'verified'])->name('dashboard');
 
   Route::get('forums', function () {
       return Inertia::render('AdminForum');

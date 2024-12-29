@@ -33,11 +33,11 @@ class AuthenticatedSessionController extends Controller
 
         // Check if the logged-in user's email is 'administrator@sibolang.com'
         if (Auth::user()->email === 'administrator@sibolang.com') {
-          return redirect('/admin/cultures'); // Redirect to admin page
+          return redirect('/admin/posts'); // Redirect to admin page
         }
 
         // Redirect other users to the home page
-        return redirect('/');
+        return redirect('/posts');
     }
 
     /**
@@ -51,6 +51,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/posts');
     }
 }

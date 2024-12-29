@@ -23,9 +23,9 @@ const Header = () => {
 
   const links = [
     {
-      href: '/admin/cultures',
+      href: '/admin/posts',
       label: 'Culture',
-      isActive: url?.includes('cultures'),
+      isActive: url?.includes('posts'),
     },
     {
       href: '/admin/forums',
@@ -38,7 +38,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white dark:border-gray-800 dark:bg-gray-950">
       <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
-        <Link href="/admin/cultures" className="flex items-center gap-2">
+        <Link href="/admin/posts" className="flex items-center gap-2">
           <Mountain className="h-6 w-6" />
           <span className="text-md font-medium">SiBolang</span>
         </Link>
