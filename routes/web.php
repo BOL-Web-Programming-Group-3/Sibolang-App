@@ -6,6 +6,10 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+Route::get('/', function () {
+    return Inertia::render('Home');
+})->middleware(['auth']);
+
 Route::resource('posts', PostController::class);
 
 Route::get('/forums', function () {
