@@ -63,10 +63,10 @@ const PostCard = ({ isDetail = false, isAdmin = false, post }) => {
       >
         <CardContent>
           {image && (
-            <div className="rounded overflow-hidden w-full h-96">
+            <div className="rounded overflow-hidden w-full h-96 bg-gray-100">
               <img
                 src={`/storage/${image}`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
           )}
