@@ -8,7 +8,6 @@ import {
   DialogFooter,
 } from '@/Components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
-import { Inertia } from '@inertiajs/inertia';
 import { useForm } from '@inertiajs/react';
 
 const PostDelete = ({ isOpen, onClose, postId }) => {

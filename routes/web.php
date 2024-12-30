@@ -31,7 +31,7 @@ Route::patch('admin/posts/status', [PostAdminController::class, 'updateStatus'])
     ->middleware(['auth', 'verified'])
     ->name('patch.updateStatus');
 
-Route::resource('comments', CommentController::class)->middleware(['auth']);
+Route::resource('comments', CommentController::class);
 
 Route::prefix('admin')->group(function () {
     Route::resource('posts', PostAdminController::class)->middleware(['auth', 'verified']);
