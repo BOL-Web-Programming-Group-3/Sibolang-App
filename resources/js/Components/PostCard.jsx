@@ -10,7 +10,7 @@ import { MessageCircle } from 'lucide-react';
 import { Button } from '@/Components/ui/button';
 import { Link } from '@inertiajs/inertia-react';
 import CommentItem from './CommentItem';
-import AddComment from './AddComment';
+import CommentAdd from './CommentAdd';
 import ConditionalWrapper from './ConditionalWrapper';
 import { Badge } from './ui/badge';
 
@@ -84,7 +84,7 @@ const PostCard = ({ isDetail = false, isAdmin = false, post }) => {
               <CommentItem />
               <CommentItem />
               <CommentItem />
-              <AddComment />
+              <CommentAdd postId={id} />
             </div>
           </>
         ) : (

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostAdminController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -29,6 +30,8 @@ Route::get('/about', function () {
 Route::patch('admin/posts/status', [PostAdminController::class, 'updateStatus'])
     ->middleware(['auth', 'verified'])
     ->name('patch.updateStatus');
+
+Route::resource('comments', CommentController::class)->middleware(['auth']);
 
 Route::prefix('admin')->group(function () {
     Route::resource('posts', PostAdminController::class)->middleware(['auth', 'verified']);

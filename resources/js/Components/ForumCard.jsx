@@ -16,7 +16,7 @@ import { Button } from '@/Components/ui/button';
 import { Link } from '@inertiajs/inertia-react';
 import ConditionalWrapper from './ConditionalWrapper';
 import CommentItem from './CommentItem';
-import AddComment from './AddComment';
+import CommentAdd from './CommentAdd';
 
 const ForumCard = ({ isDetail = false, isAdmin = false }) => {
   const itemId = 1; // FIXME: Change this to dynamic value
@@ -103,7 +103,7 @@ const ForumCard = ({ isDetail = false, isAdmin = false }) => {
               <CommentItem />
               <CommentItem />
               <CommentItem />
-              <AddComment />
+              <CommentAdd />
             </div>
           </>
         )}
