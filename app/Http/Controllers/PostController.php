@@ -17,8 +17,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        // Fetch posts from the database
-        $posts = Post::with('user')->where('status', 'published')->latest()->get();
+        // Fetch posts with user and comment count
+        $posts = Post::with('user')
+            ->withCount('comments') // Count the related comments for each post
+            ->where('status', 'published')
+            ->latest()
+            ->get();
 
         // Pass posts to the 'Post' view
         return Inertia::render('Post', [

@@ -26,6 +26,11 @@ class Post extends Model
     // Define the relationship between Post and User
     public function user()
     {
-      return $this->belongsTo(User::class, 'created_by'); // 'created_by' is the foreign key
+        return $this->belongsTo(User::class, 'created_by'); // 'created_by' is the foreign key
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

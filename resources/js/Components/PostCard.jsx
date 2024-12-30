@@ -15,7 +15,8 @@ import ConditionalWrapper from './ConditionalWrapper';
 import { Badge } from './ui/badge';
 
 const PostCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
-  const { id, status, user, title, content, image } = post || {};
+  const { id, status, user, title, content, image, comments_count } =
+    post || {};
 
   const getBadgeVariant = () => {
     if (status === 'published') return 'success';
@@ -96,7 +97,7 @@ const PostCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
                   <MessageCircle className="w-4 h-4" />
                 </Button>
               </Link>
-              <p>3</p>
+              <p>{comments_count || 0}</p>
             </div>
           </div>
         )}
