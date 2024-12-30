@@ -40,36 +40,6 @@ const AdminPost = ({ posts }) => {
     postId: null,
   });
 
-  const listCulture = [
-    {
-      id: 1,
-      createdBy: 'Ashandi Leonadi',
-      cultureName: 'Batik Indonesia',
-      category: 'Category',
-      origin: 'Indonesia',
-      description: 'Batik merupakan budaya Indonesia...',
-      status: 'Published',
-    },
-    {
-      id: 2,
-      createdBy: 'Ashandi Leonadi',
-      cultureName: 'Batik Indonesia',
-      category: 'Category',
-      origin: 'Indonesia',
-      description: 'Batik merupakan budaya Indonesia...',
-      status: 'Rejected',
-    },
-    {
-      id: 3,
-      createdBy: 'Ashandi Leonadi',
-      cultureName: 'Batik Indonesia',
-      category: 'Category',
-      origin: 'Indonesia',
-      description: 'Batik merupakan budaya Indonesia...',
-      status: 'Waiting Approval',
-    },
-  ];
-
   const getBadgeVariant = (status) => {
     if (status === 'published') return 'success';
     if (status === 'rejected') return 'destructive';
@@ -138,27 +108,31 @@ const AdminPost = ({ posts }) => {
                     >
                       View Detail
                     </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() =>
-                        setApproveModal({
-                          isOpen: true,
-                          postId: post?.id,
-                        })
-                      }
-                    >
-                      Approve
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className="cursor-pointer"
-                      onClick={() =>
-                        setRejectModal({
-                          isOpen: true,
-                          postId: post?.id,
-                        })
-                      }
-                    >
-                      Reject
-                    </DropdownMenuItem>
+                    {post?.status === 'waiting_approval' && (
+                      <>
+                        <DropdownMenuItem
+                          onClick={() =>
+                            setApproveModal({
+                              isOpen: true,
+                              postId: post?.id,
+                            })
+                          }
+                        >
+                          Approve
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="cursor-pointer"
+                          onClick={() =>
+                            setRejectModal({
+                              isOpen: true,
+                              postId: post?.id,
+                            })
+                          }
+                        >
+                          Reject
+                        </DropdownMenuItem>
+                      </>
+                    )}
                     <DropdownMenuItem
                       className="cursor-pointer"
                       onClick={() =>
