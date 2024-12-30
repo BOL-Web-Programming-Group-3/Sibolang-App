@@ -3,25 +3,22 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { EllipsisVertical } from 'lucide-react';
 import { Button } from '@/Components/ui/button';
 
-const CommentItem = () => {
+const CommentItem = ({ comment }) => {
   return (
-    <div>
+    <div className="w-full">
       <div className="w-full flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full">
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>Nabila Nurbani</AvatarFallback>
+            <AvatarFallback>{comment?.user?.name}</AvatarFallback>
           </Avatar>
-          <p className="text-md font-medium">Nabila Nurbani</p>
+          <p className="text-md font-medium">{comment?.user?.name}</p>
         </div>
         <Button variant="ghost" size="icon">
           <EllipsisVertical className="w-4 h-4" />
         </Button>
       </div>
-      <p className="mt-2">
-        Luar biasa! Saya pernah menonton Tari Kecak di Uluwatu, pengalaman yang
-        sangat berkesan. Semoga budaya seperti ini terus dilestarikan!
-      </p>
+      <p className="mt-2">{comment?.content}</p>
     </div>
   );
 };

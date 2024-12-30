@@ -14,7 +14,7 @@ import CommentAdd from './CommentAdd';
 import ConditionalWrapper from './ConditionalWrapper';
 import { Badge } from './ui/badge';
 
-const PostCard = ({ isDetail = false, isAdmin = false, post }) => {
+const PostCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
   const { id, status, user, title, content, image } = post || {};
 
   const getBadgeVariant = () => {
@@ -80,10 +80,11 @@ const PostCard = ({ isDetail = false, isAdmin = false, post }) => {
         {isDetail ? (
           <>
             <div className="border-0 border-t border-solid border-gray-200 w-full" />
-            <div className="mt-4 flex flex-col gap-6">
-              <CommentItem />
-              <CommentItem />
-              <CommentItem />
+            <div className="mt-4 flex flex-col gap-6 w-full">
+              {comments?.length > 0 &&
+                comments?.map((comment) => (
+                  <CommentItem key={comment?.id} comment={comment} />
+                ))}
               <CommentAdd postId={id} />
             </div>
           </>

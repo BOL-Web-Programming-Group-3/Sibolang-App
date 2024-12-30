@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -76,10 +77,16 @@ class PostAdminController extends Controller
      */
     public function show(Post $post)
     {
-        $post->load('user');
+        // Query comments directly with a where clause for the post_id
+        $comments = Comment::where('post_id', $post->id)
+            ->with('user') // Load the user who created the comment
+            ->oldest() // Order by the latest comments
+            ->get();
 
+        // Return the post and its comments to the Inertia view
         return Inertia::render('AdminPostDetail', [
-            'post' => $post,
+            'post' => $post->load('user'), // Load the user who created the post
+            'comments' => $comments, // Pass the filtered comments
         ]);
     }
 
