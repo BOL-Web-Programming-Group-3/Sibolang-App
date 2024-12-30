@@ -21,7 +21,7 @@ import { Badge } from '@/Components/ui/badge';
 import PostCreate from '@/Components/PostCreate';
 import { Inertia } from '@inertiajs/inertia';
 import PostApprove from '@/Components/PostApprove';
-import RejectCulture from '@/Components/RejectCulture';
+import PostReject from '@/Components/PostReject';
 import PostDelete from '@/Components/PostDelete';
 
 const AdminPost = ({ posts }) => {
@@ -160,11 +160,13 @@ const AdminPost = ({ posts }) => {
         />
       )}
 
-      <RejectCulture
-        isOpen={rejectModal.isOpen}
-        postId={rejectModal.postId}
-        onClose={() => setRejectModal({ isOpen: false, postId: null })}
-      />
+      {rejectModal.isOpen && (
+        <PostReject
+          isOpen={rejectModal.isOpen}
+          postId={rejectModal.postId}
+          onClose={() => setRejectModal({ isOpen: false, postId: null })}
+        />
+      )}
 
       {deleteModal.isOpen && (
         <PostDelete
