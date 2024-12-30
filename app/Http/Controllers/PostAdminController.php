@@ -60,7 +60,7 @@ class PostAdminController extends Controller
         Post::create([
             'title' => $validated['title'],
             'content' => $validated['content'],
-            'status' => 'waiting_approval', // Default status
+            'status' => 'pending', // Default status
             'image' => $imagePath, // Store the image path in the database
             'created_by' => Auth::id(), // Set the user ID as created_by
         ]);
@@ -124,7 +124,7 @@ class PostAdminController extends Controller
         $post->update([
             'title' => $validated['title'],
             'content' => $validated['content'],
-            'status' => 'waiting_approval', // Default status
+            'status' => 'pending', // Default status
             'image' => $imagePath,
         ]);
 

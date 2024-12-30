@@ -16,13 +16,13 @@ class PostController extends Controller
      */
     public function index()
     {
-      // Fetch posts from the database
-      $posts = Post::with('user')->where('status', 'published')->latest()->get();
+        // Fetch posts from the database
+        $posts = Post::with('user')->where('status', 'published')->latest()->get();
 
-      // Pass posts to the 'Post' view
-      return Inertia::render('Post', [
-        'posts' => $posts,
-      ]);
+        // Pass posts to the 'Post' view
+        return Inertia::render('Post', [
+            'posts' => $posts,
+        ]);
     }
 
     /**
@@ -60,7 +60,7 @@ class PostController extends Controller
         Post::create([
             'title' => $validated['title'],
             'content' => $validated['content'],
-            'status' => 'waiting_approval', // Default status
+            'status' => 'pending', // Default status
             'image' => $imagePath, // Store the image path in the database
             'created_by' => Auth::id(), // Set the user ID as created_by
         ]);
@@ -76,11 +76,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-      $post->load('user');
+        $post->load('user');
 
-      return Inertia::render('PostDetail', [
-        'post' => $post,
-      ]);
+        return Inertia::render('PostDetail', [
+            'post' => $post,
+        ]);
     }
 
     /**
@@ -124,7 +124,7 @@ class PostController extends Controller
         $post->update([
             'title' => $validated['title'],
             'content' => $validated['content'],
-            'status' => 'waiting_approval', // Default status
+            'status' => 'pending', // Default status
             'image' => $imagePath,
         ]);
 

@@ -42,10 +42,10 @@ const PostCard = ({ isDetail = false, isAdmin = false, post }) => {
           </div>
           {isAdmin && (
             <div className="flex items-center gap-2">
-              {status !== 'waiting_approval' && (
+              {status !== 'pending' && (
                 <Badge variant={getBadgeVariant()}>{getBadgeText()}</Badge>
               )}
-              {status === 'waiting_approval' && (
+              {status === 'pending' && (
                 <>
                   <Button size="sm" variant="destructive">
                     Reject

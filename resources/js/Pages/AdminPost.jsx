@@ -108,7 +108,7 @@ const AdminPost = ({ posts }) => {
                     >
                       View Detail
                     </DropdownMenuItem>
-                    {post?.status === 'waiting_approval' && (
+                    {post?.status === 'pending' && (
                       <>
                         <DropdownMenuItem
                           onClick={() =>

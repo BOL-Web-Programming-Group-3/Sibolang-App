@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->id(); // Auto-incrementing ID
             $table->string('title'); // Title of the post
             $table->text('content'); // Content of the post
-            $table->enum('status', ['published', 'rejected', 'waiting_approval'])->default('waiting_approval'); // Status of the post
+            $table->enum('status', ['published', 'rejected', 'pending'])->default('pending'); // Status of the post
             $table->string('image')->nullable(); // Image path or filename (nullable)
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade'); // Foreign key reference to 'users' table
             $table->softDeletes(); // Deleted at column for soft deletes
