@@ -170,9 +170,6 @@ class PostAdminController extends Controller
             'status' => $validated['status'],
         ]);
 
-        // Return an Inertia response instead of plain JSON
-        return back()->with([
-            'success' => 'Post status updated successfully.',
-        ]);
+        return redirect()->route('posts.index')->with('success');
     }
 }

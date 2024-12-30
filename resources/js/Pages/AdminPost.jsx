@@ -22,6 +22,7 @@ import PostCreate from '@/Components/PostCreate';
 import { Inertia } from '@inertiajs/inertia';
 import PostApprove from '@/Components/PostApprove';
 import RejectCulture from '@/Components/RejectCulture';
+import PostDelete from '@/Components/PostDelete';
 
 const AdminPost = ({ posts }) => {
   const [approveModal, setApproveModal] = useState({
@@ -30,6 +31,11 @@ const AdminPost = ({ posts }) => {
   });
 
   const [rejectModal, setRejectModal] = useState({
+    isOpen: false,
+    postId: null,
+  });
+
+  const [deleteModal, setDeleteModal] = useState({
     isOpen: false,
     postId: null,
   });
@@ -153,6 +159,17 @@ const AdminPost = ({ posts }) => {
                     >
                       Reject
                     </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onClick={() =>
+                        setDeleteModal({
+                          isOpen: true,
+                          postId: post?.id,
+                        })
+                      }
+                    >
+                      Delete
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
@@ -174,6 +191,14 @@ const AdminPost = ({ posts }) => {
         postId={rejectModal.postId}
         onClose={() => setRejectModal({ isOpen: false, postId: null })}
       />
+
+      {deleteModal.isOpen && (
+        <PostDelete
+          isOpen={deleteModal.isOpen}
+          postId={deleteModal.postId}
+          onClose={() => setDeleteModal({ isOpen: false, postId: null })}
+        />
+      )}
     </AdminLayout>
   );
 };

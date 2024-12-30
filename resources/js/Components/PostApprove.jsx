@@ -8,7 +8,6 @@ import {
   DialogFooter,
 } from '@/Components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
-import { InertiaApp } from '@inertiajs/inertia-react';
 import { useForm } from '@inertiajs/react';
 
 const PostApprove = ({ isOpen, onClose, postId }) => {
@@ -31,7 +30,6 @@ const PostApprove = ({ isOpen, onClose, postId }) => {
           description: 'Post status updated successfully!',
         });
         onClose();
-        InertiaApp.reload(); // Refresh the page after success
       },
       onError: () => {
         toast({
