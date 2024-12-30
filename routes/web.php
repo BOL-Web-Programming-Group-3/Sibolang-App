@@ -24,17 +24,7 @@ Route::get('/about', function () {
 });
 
 Route::prefix('admin')->group(function () {
-  Route::resource('posts', PostAdminController::class);
-
-  // Route::get('posts', function () {
-  //     return Inertia::render('AdminCulture');
-  // })->middleware(['auth', 'verified'])->name('dashboard');
-
-  // Route::get('posts/{id}', function ($id) {
-  //   return Inertia::render('AdminCultureDetail', [
-  //       'id' => $id,
-  //   ]);
-  // })->middleware(['auth', 'verified'])->name('dashboard');
+  Route::resource('posts', PostAdminController::class)->middleware(['auth', 'verified']);
 
   Route::get('forums', function () {
       return Inertia::render('AdminForum');
