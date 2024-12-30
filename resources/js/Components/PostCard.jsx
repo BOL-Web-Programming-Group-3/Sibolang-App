@@ -12,9 +12,10 @@ import { Link } from '@inertiajs/inertia-react';
 import CommentItem from './CommentItem';
 import AddComment from './AddComment';
 import ConditionalWrapper from './ConditionalWrapper';
+import { Badge } from './ui/badge';
 
 const PostCard = ({ isDetail = false, isAdmin = false, post }) => {
-  const { id, status, user, content, image } = post || {};
+  const { id, status, user, title, content, image } = post || {};
 
   const getBadgeVariant = () => {
     if (status === 'published') return 'success';
@@ -68,7 +69,7 @@ const PostCard = ({ isDetail = false, isAdmin = false, post }) => {
             </div>
           )}
           <div className="mt-3">
-            <p className="mb-3">{user?.name}</p>
+            <p className="mb-3">{title}</p>
             <p>{content}</p>
           </div>
         </CardContent>
