@@ -42,13 +42,15 @@ const PostCard = ({ isDetail = false, isAdmin = false, post }) => {
           </div>
           {isAdmin && (
             <div className="flex items-center gap-2">
-              <Badge variant={getBadgeVariant()}>{getBadgeText()}</Badge>
+              {status !== 'waiting_approval' && (
+                <Badge variant={getBadgeVariant()}>{getBadgeText()}</Badge>
+              )}
               {status === 'waiting_approval' && (
                 <>
-                  <Button size="sm">Approve</Button>
                   <Button size="sm" variant="destructive">
                     Reject
                   </Button>
+                  <Button size="sm">Approve</Button>
                 </>
               )}
             </div>
