@@ -16,13 +16,13 @@ class PostAdminController extends Controller
      */
     public function index()
     {
-      // Fetch posts from the database
-      $posts = Post::with('user')->latest()->get();
+        // Fetch posts from the database
+        $posts = Post::with('user')->latest()->get();
 
-      // Pass posts to the 'AdminPost' view
-      return Inertia::render('AdminPost', [
-        'posts' => $posts,
-      ]);
+        // Pass posts to the 'AdminPost' view
+        return Inertia::render('AdminPost', [
+            'posts' => $posts,
+        ]);
     }
 
     /**
@@ -76,11 +76,11 @@ class PostAdminController extends Controller
      */
     public function show(Post $post)
     {
-      $post->load('user');
+        $post->load('user');
 
-      return Inertia::render('AdminPostDetail', [
-        'post' => $post,
-      ]);
+        return Inertia::render('AdminPostDetail', [
+            'post' => $post,
+        ]);
     }
 
     /**
@@ -148,5 +148,31 @@ class PostAdminController extends Controller
         $post->delete();
 
         return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
+    }
+
+    /**
+     * Update the status of a post to published or rejected.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateStatus(Request $request)
+    {
+        // Validate the request
+        $validated = $request->validate([
+            'id' => 'required|exists:posts,id', // Ensure the post exists
+            'status' => 'required|in:published,rejected', // Only allow specific statuses
+        ]);
+
+        // Find the post and update the status
+        $post = Post::findOrFail($validated['id']);
+        $post->update([
+            'status' => $validated['status'],
+        ]);
+
+        // Return an Inertia response instead of plain JSON
+        return back()->with([
+            'success' => 'Post status updated successfully.',
+        ]);
     }
 }
