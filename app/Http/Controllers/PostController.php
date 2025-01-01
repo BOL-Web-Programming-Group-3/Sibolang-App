@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -150,5 +151,60 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('user.posts.index')->with('success', 'Post deleted successfully.');
+    }
+
+    // Handle upvoting or toggling the upvote
+    public function upvote(Post $post)
+    {
+        // Check if the user has already voted on this post
+        $existingVote = Vote::where('user_id', Auth::id())->where('post_id', $post->id)->first();
+        if ($existingVote) {
+            // If the user has already voted, toggle the vote
+            if ($existingVote->vote_type === 'up') {
+                // If it's an upvote, remove the vote (delete)
+                $existingVote->delete();
+                return redirect()->back()->with('success');
+            } else {
+                // If it's a downvote, change it to an upvote
+                $existingVote->update(['vote_type' => 'up']);
+                return redirect()->back()->with('success');
+            }
+        } else {
+            // Create an 'up' vote if the user hasn't voted yet
+            Vote::create([
+                'user_id' => Auth::id(),
+                'post_id' => $post->id,
+                'vote_type' => 'up',
+            ]);
+            return redirect()->back()->with('success');
+        }
+    }
+
+    // Handle downvoting or toggling the downvote
+    public function downvote(Post $post)
+    {
+        // Check if the user has already voted on this post
+        $existingVote = Vote::where('user_id', Auth::id())->where('post_id', $post->id)->first();
+
+        if ($existingVote) {
+            // If the user has already voted, toggle the vote
+            if ($existingVote->vote_type === 'down') {
+                // If it's a downvote, remove the vote (delete)
+                $existingVote->delete();
+                return redirect()->back()->with('success');
+            } else {
+                // If it's an upvote, change it to a downvote
+                $existingVote->update(['vote_type' => 'down']);
+                return redirect()->back()->with('success');
+            }
+        } else {
+            // Create a 'down' vote if the user hasn't voted yet
+            Vote::create([
+                'user_id' => Auth::id(),
+                'post_id' => $post->id,
+                'vote_type' => 'down',
+            ]);
+            return redirect()->back()->with('success');
+        }
     }
 }

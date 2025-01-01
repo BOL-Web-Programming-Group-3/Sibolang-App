@@ -5,8 +5,8 @@ import {
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ArrowBigDown, ArrowBigUp, MessageCircle } from 'lucide-react';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { MessageCircle } from 'lucide-react';
 import { Button } from '@/Components/ui/button';
 import { Link } from '@inertiajs/inertia-react';
 import CommentItem from './CommentItem';
@@ -14,6 +14,7 @@ import CommentAdd from './CommentAdd';
 import ConditionalWrapper from './ConditionalWrapper';
 import { Badge } from './ui/badge';
 import { usePage } from '@inertiajs/react';
+import ForumVote from './ForumVote';
 
 const ForumCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
   const { id, status, user, title, content, image, comments_count } =
@@ -100,18 +101,7 @@ const ForumCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
             </>
           ) : (
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <Button variant="ghost" size="icon">
-                  <ArrowBigUp className="w-4 h-4" />
-                </Button>
-                <p>3</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <Button variant="ghost" size="icon">
-                  <ArrowBigDown className="w-4 h-4" />
-                </Button>
-                <p>3</p>
-              </div>
+              <ForumVote postId={id} post={post} />
               <div className="flex items-center gap-2">
                 <Link href={`/forums/${id}`}>
                   <Button variant="ghost" size="icon">

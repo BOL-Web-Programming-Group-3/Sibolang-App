@@ -34,4 +34,22 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    // Define the relationship between Post and Vote
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+
+    // Get the count of upvotes
+    public function upvotes()
+    {
+        return $this->votes()->where('vote_type', 'up')->count();
+    }
+
+    // Get the count of downvotes
+    public function downvotes()
+    {
+        return $this->votes()->where('vote_type', 'down')->count();
+    }
 }

@@ -20,6 +20,14 @@ class ForumController extends Controller
         // Fetch posts with user and comment count
         $posts = Post::with('user')
             ->withCount('comments') // Count the related comments for each post
+            ->withCount([
+                'votes as upvotes_count' => function ($query) {
+                    $query->where('vote_type', 'up');
+                },
+                'votes as downvotes_count' => function ($query) {
+                    $query->where('vote_type', 'down');
+                },
+            ])
             ->where('status', 'published')
             ->where('type', 'forum')
             ->latest()

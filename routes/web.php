@@ -25,6 +25,11 @@ Route::resource('posts', PostController::class)->names([
     'destroy' => 'user.posts.destroy',
 ]);
 
+Route::middleware(['auth'])->group(function () {
+    Route::post('posts/{post}/upvote', [PostController::class, 'upvote'])->name('user.posts.upvote');
+    Route::post('posts/{post}/downvote', [PostController::class, 'downvote'])->name('user.posts.downvote');
+});
+
 // User Forums Routes
 Route::resource('forums', ForumController::class)->names([
     'index' => 'user.forum.index',
