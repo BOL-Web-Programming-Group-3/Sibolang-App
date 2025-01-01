@@ -109,31 +109,33 @@ const PostCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
             </div>
           </CardContent>
         </ConditionalWrapper>
-        <CardFooter className="flex flex-col items-start">
-          {isDetail ? (
-            <>
-              <div className="border-0 border-t border-solid border-gray-200 w-full" />
-              <div className="mt-4 flex flex-col gap-6 w-full">
-                {comments?.length > 0 &&
-                  comments?.map((comment) => (
-                    <CommentItem key={comment?.id} comment={comment} />
-                  ))}
-                <CommentAdd postId={id} />
+        {status === 'published' && (
+          <CardFooter className="flex flex-col items-start">
+            {isDetail ? (
+              <>
+                <div className="border-0 border-t border-solid border-gray-200 w-full" />
+                <div className="mt-4 flex flex-col gap-6 w-full">
+                  {comments?.length > 0 &&
+                    comments?.map((comment) => (
+                      <CommentItem key={comment?.id} comment={comment} />
+                    ))}
+                  <CommentAdd postId={id} />
+                </div>
+              </>
+            ) : (
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <Link href={`/posts/${id}`}>
+                    <Button variant="ghost" size="icon">
+                      <MessageCircle className="w-4 h-4" />
+                    </Button>
+                  </Link>
+                  <p>{comments_count || 0}</p>
+                </div>
               </div>
-            </>
-          ) : (
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <Link href={`/posts/${id}`}>
-                  <Button variant="ghost" size="icon">
-                    <MessageCircle className="w-4 h-4" />
-                  </Button>
-                </Link>
-                <p>{comments_count || 0}</p>
-              </div>
-            </div>
-          )}
-        </CardFooter>
+            )}
+          </CardFooter>
+        )}
       </Card>
 
       {approveModal.isOpen && (
