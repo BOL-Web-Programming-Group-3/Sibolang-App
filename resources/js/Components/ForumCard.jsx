@@ -14,17 +14,25 @@ import {
 } from 'lucide-react';
 import { Button } from '@/Components/ui/button';
 import { Link } from '@inertiajs/inertia-react';
-import ConditionalWrapper from './ConditionalWrapper';
 import CommentItem from './CommentItem';
 import CommentAdd from './CommentAdd';
+import ConditionalWrapper from './ConditionalWrapper';
+import { Badge } from './ui/badge';
 
-const ForumCard = ({ isDetail = false, isAdmin = false }) => {
-  const itemId = 1; // FIXME: Change this to dynamic value
+const ForumCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
+  const { id, status, user, title, content, image, comments_count } =
+    post || {};
 
-  const getBadgeVariant = (status) => {
-    if (status === 'Published') return 'success';
-    if (status === 'Rejected') return 'destructive';
+  const getBadgeVariant = () => {
+    if (status === 'published') return 'success';
+    if (status === 'rejected') return 'destructive';
     return 'outline';
+  };
+
+  const getBadgeText = () => {
+    if (status === 'published') return 'Published';
+    if (status === 'rejected') return 'Rejected';
+    return 'Pending';
   };
 
   return (
@@ -34,39 +42,43 @@ const ForumCard = ({ isDetail = false, isAdmin = false }) => {
           <div className="flex items-center gap-2">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>Muhammad Faza</AvatarFallback>
+              <AvatarFallback>{user?.name}</AvatarFallback>
             </Avatar>
-            <p className="text-md font-medium">Muhammad Faza</p>
+            <p className="text-md font-medium">{user?.name}</p>
           </div>
           {isAdmin && (
             <div className="flex items-center gap-2">
-              {/* <Badge variant={getBadgeVariant('Published')}>Published</Badge>
-                      <Badge variant={getBadgeVariant('Rejected')}>Rejected</Badge> */}
-              <Button size="sm">Approve</Button>
-              <Button size="sm" variant="destructive">
-                Reject
-              </Button>
+              {status !== 'pending' && (
+                <Badge variant={getBadgeVariant()}>{getBadgeText()}</Badge>
+              )}
+              {status === 'pending' && (
+                <>
+                  <Button size="sm" variant="destructive">
+                    Reject
+                  </Button>
+                  <Button size="sm">Approve</Button>
+                </>
+              )}
             </div>
           )}
         </div>
       </CardHeader>
       <ConditionalWrapper
         condition={!isDetail}
-        wrapper={(children) => (
-          <Link href={`/forums/${itemId}`}>{children}</Link>
-        )}
+        wrapper={(children) => <Link href={`/posts/${id}`}>{children}</Link>}
       >
         <CardContent>
-          <div>
-            <p className="font-medium mb-3">
-              Bagaimana Cara Melibatkan Generasi Muda dalam Pelestarian Tari
-              Tradisional?
-            </p>
-            <p>
-              Generasi muda saat ini lebih tertarik dengan budaya populer. Apa
-              langkah konkret yang bisa dilakukan untuk menarik perhatian mereka
-              pada seni tradisional seperti Tari Kecak atau Tari Saman?
-            </p>
+          {image && (
+            <div className="rounded overflow-hidden w-full h-96 bg-gray-100">
+              <img
+                src={`/storage/${image}`}
+                className="w-full h-full object-contain"
+              />
+            </div>
+          )}
+          <div className="mt-3">
+            <p className="mb-3">{title}</p>
+            <p>{content}</p>
           </div>
         </CardContent>
       </ConditionalWrapper>
@@ -91,7 +103,7 @@ const ForumCard = ({ isDetail = false, isAdmin = false }) => {
                   <MessageCircle className="w-4 h-4" />
                 </Button>
               </Link>
-              <p>3</p>
+              <p>{comments_count}</p>
             </div>
           )}
         </div>

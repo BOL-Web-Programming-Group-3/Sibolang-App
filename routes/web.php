@@ -24,16 +24,6 @@ Route::resource('posts', PostController::class)->names([
     'destroy' => 'user.posts.destroy',
 ]);
 
-Route::get('/forums', function () {
-    return Inertia::render('Forum');
-});
-
-Route::get('/forums/{id}', function ($id) {
-    return Inertia::render('ForumDetail', [
-        'id' => $id,
-    ]);
-});
-
 // About Route
 Route::get('/about', function () {
     return Inertia::render('About');
@@ -59,6 +49,7 @@ Route::prefix('admin')->group(function () {
         'destroy' => 'admin.posts.destroy',
     ]);
 
+    // Admin Forums Routes
     Route::resource('forums', ForumAdminController::class)->middleware(['auth', 'verified'])->names([
         'index' => 'admin.forums.index',
         'create' => 'admin.forums.create',

@@ -9,8 +9,6 @@ const AdminLayout = ({ children }) => {
     },
   } = usePage(); // Get the current URL
 
-  console.log('user', user);
-
   if (user?.email !== 'administrator@sibolang.com') {
     return (
       <div className="pb-10">

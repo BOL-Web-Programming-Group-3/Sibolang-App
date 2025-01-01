@@ -21,7 +21,6 @@ export default function ForumCreate({ isAdmin = false }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     title: '',
     content: '',
-    image: null, // Add image field to the form data
   });
   const { toast } = useToast();
 
@@ -31,9 +30,6 @@ export default function ForumCreate({ isAdmin = false }) {
     const formData = new FormData(); // Create a FormData object
     formData.append('title', data.title);
     formData.append('content', data.content);
-    if (data.image) {
-      formData.append('image', data.image); // Append the image file if it exists
-    }
 
     post(route(isAdmin ? 'admin.forums.store' : 'user.forums.store'), {
       data: formData, // Pass the FormData object
@@ -92,20 +88,6 @@ export default function ForumCreate({ isAdmin = false }) {
                   onChange={(e) => setData('content', e.target.value)}
                 />
                 <InputError message={errors.content} className="mt-2" />
-              </div>
-
-              {/* Image Field */}
-              <div>
-                <InputLabel htmlFor="image" value="Image" />
-                <Input
-                  id="image"
-                  type="file"
-                  name="image"
-                  className="mt-1 block w-full"
-                  autoComplete="off"
-                  onChange={(e) => setData('image', e.target.files[0])}
-                />
-                <InputError message={errors.image} className="mt-2" />
               </div>
             </div>
 
