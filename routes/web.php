@@ -49,6 +49,12 @@ Route::get('/about', function () {
 // Comments Routes
 Route::resource('comments', CommentController::class);
 
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
 Route::prefix('admin')->group(function () {
     // Admin Posts Update Status
     Route::patch('posts/status', [PostAdminController::class, 'updateStatus'])
@@ -85,12 +91,6 @@ Route::prefix('admin')->group(function () {
     Route::get('users', function () {
         return Inertia::render('AdminUser');
     })->middleware(['auth', 'verified'])->name('dashboard');
-
-    Route::middleware('auth')->group(function () {
-        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    });
 });
 
 require __DIR__ . '/auth.php';

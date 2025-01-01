@@ -70,6 +70,14 @@ const Header = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <LinkIntertia
+                  href={route('profile.edit')}
+                  method="get"
+                  as="button"
+                  className="w-full"
+                >
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                </LinkIntertia>
+                <LinkIntertia
                   href={route('logout')}
                   method="post"
                   as="button"
