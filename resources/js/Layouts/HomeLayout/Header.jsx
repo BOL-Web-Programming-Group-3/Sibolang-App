@@ -58,7 +58,6 @@ const Header = () => {
               <DropdownMenuTrigger>
                 <div className="flex items-center gap-2">
                   <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
                     <AvatarFallback>{user?.name}</AvatarFallback>
                   </Avatar>
                   <p className="texet-md font-medium">{user?.name}</p>

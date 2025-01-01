@@ -44,7 +44,6 @@ const ForumCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback>{user?.name}</AvatarFallback>
             </Avatar>
             <p className="text-md font-medium">{user?.name}</p>

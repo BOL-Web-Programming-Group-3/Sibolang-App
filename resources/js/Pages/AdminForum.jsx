@@ -81,7 +81,6 @@ const AdminForum = ({ posts }) => {
               <TableCell>
                 <div className="flex items-center gap-2">
                   <Avatar className="w-8 h-8">
-                    <AvatarImage src="https://github.com/shadcn.png" />
                     <AvatarFallback>{post?.user?.name}</AvatarFallback>
                   </Avatar>
                   <p className="texet-md font-medium">{post?.user?.name}</p>

@@ -44,7 +44,6 @@ const CommentItem = ({ comment }) => {
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-2 w-full">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
             <AvatarFallback>{comment?.user?.name}</AvatarFallback>
           </Avatar>
           <p className="text-md font-medium">{comment?.user?.name}</p>
