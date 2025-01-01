@@ -90,6 +90,9 @@ const ForumCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
         <CardFooter className="flex flex-col items-start">
           {isDetail ? (
             <>
+              <div className="flex items-center gap-4">
+                <ForumVote postId={id} post={post} />
+              </div>
               <div className="border-0 border-t border-solid border-gray-200 w-full" />
               <div className="mt-4 flex flex-col gap-6 w-full">
                 {comments?.length > 0 &&
