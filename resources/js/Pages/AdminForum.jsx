@@ -18,11 +18,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/Components/ui/button';
 import { EllipsisVertical } from 'lucide-react';
 import { Badge } from '@/Components/ui/badge';
-import PostCreate from '@/Components/PostCreate';
 import { Inertia } from '@inertiajs/inertia';
 import PostApprove from '@/Components/PostApprove';
 import PostReject from '@/Components/PostReject';
 import PostDelete from '@/Components/PostDelete';
+import ForumCreate from '@/Components/ForumCreate';
 
 const AdminForum = ({ posts }) => {
   const [approveModal, setApproveModal] = useState({
@@ -61,7 +61,7 @@ const AdminForum = ({ posts }) => {
             Manage and review all user-submitted forums in the system.
           </span>
         </div>
-        <PostCreate />
+        <ForumCreate isAdmin />
       </div>
       <Table>
         <TableHeader>

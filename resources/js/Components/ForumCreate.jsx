@@ -1,5 +1,8 @@
-import React from 'react';
-import { Button } from './ui/button';
+import React, { useState } from 'react';
+import InputLabel from '@/Components/InputLabel';
+import InputError from '@/Components/InputError';
+import { Input } from '@/Components/ui/input';
+import { Textarea } from '@/Components/ui/textarea';
 import {
   Dialog,
   DialogContent,
@@ -9,99 +12,111 @@ import {
   DialogTrigger,
   DialogFooter,
 } from '@/Components/ui/dialog';
-import { Input } from '@/Components/ui/input';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Textarea } from './ui/textarea';
+import { useForm } from '@inertiajs/react';
+import { Button } from '@/Components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
-const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-});
-
-const ForumCreate = () => {
-  const form = useForm({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      username: '',
-    },
+export default function ForumCreate({ isAdmin = false }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { data, setData, post, processing, errors, reset } = useForm({
+    title: '',
+    content: '',
+    image: null, // Add image field to the form data
   });
+  const { toast } = useToast();
 
-  const onSubmit = (data) => {
-    //
+  const submit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(); // Create a FormData object
+    formData.append('title', data.title);
+    formData.append('content', data.content);
+    if (data.image) {
+      formData.append('image', data.image); // Append the image file if it exists
+    }
+
+    post(route(isAdmin ? 'admin.forums.store' : 'user.forums.store'), {
+      data: formData, // Pass the FormData object
+      onSuccess: () => {
+        reset();
+        toast({
+          description: 'Forum created successfully!',
+        });
+        setIsModalOpen(false); // Close the modal on success
+      },
+    });
   };
 
   return (
     <div>
-      <Dialog>
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogTrigger>
-          <Button>Create Forum</Button>
+          <Button onClick={() => setIsModalOpen(true)}>Create Forum</Button>
         </DialogTrigger>
         <DialogContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <DialogHeader>
-                <DialogTitle>Create Forum</DialogTitle>
-                <DialogDescription>
-                  Start a new discussion to explore and share perspectives on
-                  culture and heritage.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Topic</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter the topic of discussion"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+          <form onSubmit={submit}>
+            <DialogHeader>
+              <DialogTitle>Create Forum</DialogTitle>
+              <DialogDescription>
+                Start a new discussion to explore and share perspectives on
+                culture and heritage.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              {/* Title Field */}
+              <div>
+                <InputLabel htmlFor="title" value="Title" />
+                <Input
+                  id="title"
+                  type="text"
+                  name="title"
+                  value={data.title}
+                  className="mt-1 block w-full"
+                  autoComplete="off"
+                  onChange={(e) => setData('title', e.target.value)}
+                  placeholder="Enter the topic of discussion"
                 />
-
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Content</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Write the content of your discussion"
-                          className="min-h-24"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <InputError message={errors.title} className="mt-2" />
               </div>
-              <DialogFooter>
-                <Button type="submit">Create Forum</Button>
-              </DialogFooter>
-            </form>
-          </Form>
+
+              {/* Content Field */}
+              <div>
+                <InputLabel htmlFor="content" value="Content" />
+                <Textarea
+                  id="content"
+                  name="content"
+                  value={data.content}
+                  placeholder="Write the content of your discussion"
+                  className="mt-1 block w-full"
+                  autoComplete="off"
+                  onChange={(e) => setData('content', e.target.value)}
+                />
+                <InputError message={errors.content} className="mt-2" />
+              </div>
+
+              {/* Image Field */}
+              <div>
+                <InputLabel htmlFor="image" value="Image" />
+                <Input
+                  id="image"
+                  type="file"
+                  name="image"
+                  className="mt-1 block w-full"
+                  autoComplete="off"
+                  onChange={(e) => setData('image', e.target.files[0])}
+                />
+                <InputError message={errors.image} className="mt-2" />
+              </div>
+            </div>
+
+            <DialogFooter>
+              <Button type="submit" disabled={processing}>
+                {processing ? 'Submitting...' : 'Create Forum'}
+              </Button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
     </div>
   );
-};
-
-export default ForumCreate;
+}

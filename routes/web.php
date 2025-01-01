@@ -59,7 +59,15 @@ Route::prefix('admin')->group(function () {
         'destroy' => 'admin.posts.destroy',
     ]);
 
-    Route::resource('forums', ForumAdminController::class)->middleware(['auth', 'verified']);
+    Route::resource('forums', ForumAdminController::class)->middleware(['auth', 'verified'])->names([
+        'index' => 'admin.forums.index',
+        'create' => 'admin.forums.create',
+        'store' => 'admin.forums.store',
+        'show' => 'admin.forums.show',
+        'edit' => 'admin.forums.edit',
+        'update' => 'admin.forums.update',
+        'destroy' => 'admin.forums.destroy',
+    ]);
 
     Route::get('users', function () {
         return Inertia::render('AdminUser');
