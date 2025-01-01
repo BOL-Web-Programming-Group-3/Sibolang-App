@@ -60,16 +60,31 @@ class ForumAdminController extends Controller
      */
     public function show(Post $forum)
     {
-        // Query comments directly with a where clause for the post_id
+        // Fetch comments for the post with user info, ordered by the oldest
         $comments = Comment::where('post_id', $forum->id)
             ->with('user') // Load the user who created the comment
-            ->oldest() // Order by the latest comments
+            ->oldest() // Order by the oldest comments
             ->get();
 
-        // Return the post and its comments to the Inertia view
+        // Eager load the 'user' relation along with the counts for upvotes and downvotes
+        $forum->load('user'); // Ensure user is loaded
+        $forum->loadCount([
+            'votes as upvotes_count' => function ($query) {
+                $query->where('vote_type', 'up');
+            },
+            'votes as downvotes_count' => function ($query) {
+                $query->where('vote_type', 'down');
+            },
+        ]);
+
+        // Check if the logged-in user has voted on the post and store their vote status
+        $userVote = $forum->votes->where('user_id', Auth::id())->first();
+        $forum->user_vote = $userVote ? $userVote->vote_type : null; // 'up', 'down', or null if no vote
+
+        // Return the forum post, its comments, and vote data to the Inertia view
         return Inertia::render('AdminForumDetail', [
-            'post' => $forum->load('user'), // Load the user who created the post
-            'comments' => $comments, // Pass the filtered comments
+            'post' => $forum, // The forum post with user, vote counts, and user vote status
+            'comments' => $comments, // The list of comments for the post
         ]);
     }
 
