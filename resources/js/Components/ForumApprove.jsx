@@ -10,7 +10,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { useForm } from '@inertiajs/react';
 
-const PostApprove = ({ isOpen, onClose, postId }) => {
+const ForumApprove = ({ isOpen, onClose, postId }) => {
   const { data, patch, processing } = useForm({
     id: postId,
     status: 'published',
@@ -66,4 +66,4 @@ const PostApprove = ({ isOpen, onClose, postId }) => {
   );
 };
 
-export default PostApprove;
+export default ForumApprove;

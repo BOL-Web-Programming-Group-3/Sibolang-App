@@ -7,8 +7,39 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/Components/ui/dialog';
+import { useToast } from '@/hooks/use-toast';
+import { useForm } from '@inertiajs/react';
 
-const ForumReject = ({ isOpen, onClose }) => {
+const ForumReject = ({ isOpen, onClose, postId }) => {
+  const { data, patch, processing } = useForm({
+    id: postId,
+    status: 'rejected',
+  });
+  const { toast } = useToast();
+
+  const updateStatus = () => {
+    const formData = new FormData(); // Create a FormData object
+    formData.append('id', data.id); // Append the post ID
+    formData.append('status', data.status); // Append the new status
+
+    // Send the request using Inertia's patch method
+    patch(route('admin.forums.updateStatus'), {
+      data: formData, // Pass the FormData object
+      onSuccess: () => {
+        toast({
+          description: 'Forum status updated successfully!',
+        });
+        onClose();
+      },
+      onError: () => {
+        toast({
+          description: 'Failed to update forum status. Please try again.',
+          status: 'error',
+        });
+      },
+    });
+  };
+
   return (
     <Dialog open={isOpen} onClose={onClose}>
       <DialogContent className="[&>button]:hidden">
@@ -26,7 +57,7 @@ const ForumReject = ({ isOpen, onClose }) => {
           <Button type="button" variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="button" variant="destructive">
+          <Button type="button" onClick={updateStatus} disabled={processing}>
             Reject
           </Button>
         </DialogFooter>
