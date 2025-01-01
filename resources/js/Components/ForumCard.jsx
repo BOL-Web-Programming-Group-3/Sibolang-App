@@ -82,45 +82,46 @@ const ForumCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
           </div>
         </CardContent>
       </ConditionalWrapper>
-      <CardFooter className="flex flex-col items-start">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon">
-              <ArrowBigUp className="w-4 h-4" />
-            </Button>
-            <p>3</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon">
-              <ArrowBigDown className="w-4 h-4" />
-            </Button>
-            <p>3</p>
-          </div>
-          {!isDetail && (
-            <div className="flex items-center gap-2">
-              <Link href={`/forums/${itemId}`}>
+
+      {status === 'published' && (
+        <CardFooter className="flex flex-col items-start">
+          {isDetail ? (
+            <>
+              <div className="border-0 border-t border-solid border-gray-200 w-full" />
+              <div className="mt-4 flex flex-col gap-6 w-full">
+                {comments?.length > 0 &&
+                  comments?.map((comment) => (
+                    <CommentItem key={comment?.id} comment={comment} />
+                  ))}
+                <CommentAdd postId={id} />
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
                 <Button variant="ghost" size="icon">
-                  <MessageCircle className="w-4 h-4" />
+                  <ArrowBigUp className="w-4 h-4" />
                 </Button>
-              </Link>
-              <p>{comments_count}</p>
+                <p>3</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon">
+                  <ArrowBigDown className="w-4 h-4" />
+                </Button>
+                <p>3</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Link href={`/forums/${itemId}`}>
+                  <Button variant="ghost" size="icon">
+                    <MessageCircle className="w-4 h-4" />
+                  </Button>
+                </Link>
+                <p>{comments_count}</p>
+              </div>
             </div>
           )}
-        </div>
-
-        {isDetail && (
-          <>
-            <div className="border-0 border-t border-solid border-gray-200 w-full" />
-            <div className="mt-4 flex flex-col gap-6 w-full">
-              {comments?.length > 0 &&
-                comments?.map((comment) => (
-                  <CommentItem key={comment?.id} comment={comment} />
-                ))}
-              <CommentAdd postId={id} />
-            </div>
-          </>
-        )}
-      </CardFooter>
+        </CardFooter>
+      )}
     </Card>
   );
 };
