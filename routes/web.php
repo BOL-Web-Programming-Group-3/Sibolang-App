@@ -36,7 +36,7 @@ Route::prefix('admin')->group(function () {
     // Admin Posts Update Status
     Route::patch('posts/status', [PostAdminController::class, 'updateStatus'])
         ->middleware(['auth', 'verified'])
-        ->name('admin.patch.updateStatus');
+        ->name('admin.posts.updateStatus');
 
     // Admin Posts Routes
     Route::resource('posts', PostAdminController::class)->middleware(['auth', 'verified'])->names([
@@ -48,6 +48,11 @@ Route::prefix('admin')->group(function () {
         'update' => 'admin.posts.update',
         'destroy' => 'admin.posts.destroy',
     ]);
+
+    // Admin Forums Update Status
+    Route::patch('forums/status', [ForumAdminController::class, 'updateStatus'])
+        ->middleware(['auth', 'verified'])
+        ->name('admin.forums.updateStatus');
 
     // Admin Forums Routes
     Route::resource('forums', ForumAdminController::class)->middleware(['auth', 'verified'])->names([

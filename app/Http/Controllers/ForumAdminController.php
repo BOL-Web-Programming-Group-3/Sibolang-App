@@ -116,4 +116,27 @@ class ForumAdminController extends Controller
 
         return redirect()->route('admin.forums.index')->with('success');
     }
+
+    /**
+     * Update the status of a post to published or rejected.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateStatus(Request $request)
+    {
+        // Validate the request
+        $validated = $request->validate([
+            'id' => 'required|exists:posts,id', // Ensure the post exists
+            'status' => 'required|in:published,rejected', // Only allow specific statuses
+        ]);
+
+        // Find the post and update the status
+        $post = Post::findOrFail($validated['id']);
+        $post->update([
+            'status' => $validated['status'],
+        ]);
+
+        return redirect()->route('admin.forums.index')->with('success');
+    }
 }
