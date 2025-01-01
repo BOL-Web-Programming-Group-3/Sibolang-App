@@ -31,16 +31,6 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for creating a new post.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('posts.create');
-    }
-
-    /**
      * Store a newly created post in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -70,7 +60,7 @@ class PostController extends Controller
             'created_by' => Auth::id(), // Set the user ID as created_by
         ]);
 
-        return redirect()->route('posts.index')->with('success', 'Post created successfully.');
+        return redirect()->route('user.posts.index')->with('success', 'Post created successfully.');
     }
 
     /**
@@ -102,7 +92,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        return view('user.posts.edit', compact('post'));
     }
 
     /**
@@ -139,7 +129,7 @@ class PostController extends Controller
             'image' => $imagePath,
         ]);
 
-        return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
+        return redirect()->route('user.posts.index')->with('success', 'Post updated successfully.');
     }
 
     /**
@@ -158,6 +148,6 @@ class PostController extends Controller
         // Delete the post
         $post->delete();
 
-        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
+        return redirect()->route('user.posts.index')->with('success', 'Post deleted successfully.');
     }
 }

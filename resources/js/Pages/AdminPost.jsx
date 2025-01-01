@@ -59,7 +59,7 @@ const AdminPost = ({ posts }) => {
           <p className="text-lg font-medium">Posts</p>
           <span>Manage and review all user-submitted posts in the system.</span>
         </div>
-        <PostCreate />
+        <PostCreate isAdmin />
       </div>
       <Table>
         <TableHeader>

@@ -23,7 +23,7 @@ const PostReject = ({ isOpen, onClose, postId }) => {
     formData.append('status', data.status); // Append the new status
 
     // Send the request using Inertia's patch method
-    patch(route('patch.updateStatus'), {
+    patch(route('admin.patch.updateStatus'), {
       data: formData, // Pass the FormData object
       onSuccess: () => {
         toast({

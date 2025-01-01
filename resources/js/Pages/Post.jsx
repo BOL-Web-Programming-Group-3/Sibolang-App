@@ -3,7 +3,6 @@ import PostCreate from '@/Components/PostCreate';
 import HomeLayout from '@/Layouts/HomeLayout';
 
 export default function Home({ posts }) {
-  console.log('posts', posts);
   return (
     <HomeLayout>
       <div className="flex flex-col justify-center items-center">
@@ -15,7 +14,7 @@ export default function Home({ posts }) {
                 Discover and share stories about our rich cultural heritage.
               </span>
             </div>
-            <PostCreate />
+            <PostCreate isAdmin={false} />
           </div>
           {posts?.length > 0 &&
             posts?.map((post) => <PostCard key={post?.id} post={post} />)}

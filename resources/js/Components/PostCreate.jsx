@@ -16,7 +16,7 @@ import { useForm } from '@inertiajs/react';
 import { Button } from '@/Components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 
-export default function PostCreate() {
+export default function PostCreate({ isAdmin = false }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data, setData, post, processing, errors, reset } = useForm({
     title: '',
@@ -35,7 +35,7 @@ export default function PostCreate() {
       formData.append('image', data.image); // Append the image file if it exists
     }
 
-    post(route('posts.store'), {
+    post(route(isAdmin ? 'admin.posts.store' : 'user.posts.store'), {
       data: formData, // Pass the FormData object
       onSuccess: () => {
         reset();

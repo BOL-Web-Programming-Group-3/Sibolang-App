@@ -8,11 +8,21 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+// Home Route
 Route::get('/', function () {
     return Inertia::render('Home');
 })->middleware(['auth']);
 
-Route::resource('posts', PostController::class);
+// User Posts Routes
+Route::resource('posts', PostController::class)->names([
+    'index' => 'user.posts.index',
+    'create' => 'user.posts.create',
+    'store' => 'user.posts.store',
+    'show' => 'user.posts.show',
+    'edit' => 'user.posts.edit',
+    'update' => 'user.posts.update',
+    'destroy' => 'user.posts.destroy',
+]);
 
 Route::get('/forums', function () {
     return Inertia::render('Forum');
@@ -24,18 +34,30 @@ Route::get('/forums/{id}', function ($id) {
     ]);
 });
 
+// About Route
 Route::get('/about', function () {
     return Inertia::render('About');
 });
 
-Route::patch('admin/posts/status', [PostAdminController::class, 'updateStatus'])
-    ->middleware(['auth', 'verified'])
-    ->name('patch.updateStatus');
-
+// Comments Routes
 Route::resource('comments', CommentController::class);
 
 Route::prefix('admin')->group(function () {
-    Route::resource('posts', PostAdminController::class)->middleware(['auth', 'verified']);
+    // Admin Posts Update Status
+    Route::patch('posts/status', [PostAdminController::class, 'updateStatus'])
+        ->middleware(['auth', 'verified'])
+        ->name('admin.patch.updateStatus');
+
+    // Admin Posts Routes
+    Route::resource('posts', PostAdminController::class)->middleware(['auth', 'verified'])->names([
+        'index' => 'admin.posts.index',
+        'create' => 'admin.posts.create',
+        'store' => 'admin.posts.store',
+        'show' => 'admin.posts.show',
+        'edit' => 'admin.posts.edit',
+        'update' => 'admin.posts.update',
+        'destroy' => 'admin.posts.destroy',
+    ]);
 
     Route::resource('forums', ForumAdminController::class)->middleware(['auth', 'verified']);
 

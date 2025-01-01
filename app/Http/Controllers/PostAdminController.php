@@ -56,7 +56,7 @@ class PostAdminController extends Controller
             'created_by' => Auth::id(), // Set the user ID as created_by
         ]);
 
-        return redirect()->route('posts.index')->with('success', 'Post created successfully.');
+        return redirect()->route('admin.posts.index')->with('success', 'Post created successfully.');
     }
 
     /**
@@ -114,7 +114,7 @@ class PostAdminController extends Controller
             'image' => $imagePath,
         ]);
 
-        return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
+        return redirect()->route('admin.posts.index')->with('success', 'Post updated successfully.');
     }
 
     /**
@@ -133,7 +133,7 @@ class PostAdminController extends Controller
         // Delete the post
         $post->delete();
 
-        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
+        return redirect()->route('admin.posts.index')->with('success', 'Post deleted successfully.');
     }
 
     /**
@@ -156,6 +156,6 @@ class PostAdminController extends Controller
             'status' => $validated['status'],
         ]);
 
-        return redirect()->route('posts.index')->with('success');
+        return redirect()->route('admin.posts.index')->with('success');
     }
 }
