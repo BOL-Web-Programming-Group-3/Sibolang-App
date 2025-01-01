@@ -18,56 +18,38 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/Components/ui/button';
 import { EllipsisVertical } from 'lucide-react';
 import { Badge } from '@/Components/ui/badge';
-import ForumCreate from '@/Components/ForumCreate';
+import PostCreate from '@/Components/PostCreate';
 import { Inertia } from '@inertiajs/inertia';
-import ForumApprove from '@/Components/ForumApprove';
-import ForumReject from '@/Components/ForumReject';
+import PostApprove from '@/Components/PostApprove';
+import PostReject from '@/Components/PostReject';
+import PostDelete from '@/Components/PostDelete';
 
-const AdminForum = () => {
+const AdminForum = ({ posts }) => {
   const [approveModal, setApproveModal] = useState({
     isOpen: false,
-    forumId: null,
+    postId: null,
   });
 
   const [rejectModal, setRejectModal] = useState({
     isOpen: false,
-    forumId: null,
+    postId: null,
   });
 
-  const listForum = [
-    {
-      id: 1,
-      createdBy: 'Ashandi Leonadi',
-      forumName: 'Batik Indonesia',
-      category: 'Category',
-      origin: 'Indonesia',
-      description: 'Batik merupakan budaya Indonesia...',
-      status: 'Approved',
-    },
-    {
-      id: 2,
-      createdBy: 'Ashandi Leonadi',
-      forumName: 'Batik Indonesia',
-      category: 'Category',
-      origin: 'Indonesia',
-      description: 'Batik merupakan budaya Indonesia...',
-      status: 'Rejected',
-    },
-    {
-      id: 3,
-      createdBy: 'Ashandi Leonadi',
-      forumName: 'Batik Indonesia',
-      category: 'Category',
-      origin: 'Indonesia',
-      description: 'Batik merupakan budaya Indonesia...',
-      status: 'Waiting Approval',
-    },
-  ];
+  const [deleteModal, setDeleteModal] = useState({
+    isOpen: false,
+    postId: null,
+  });
 
   const getBadgeVariant = (status) => {
-    if (status === 'Approved') return 'success';
-    if (status === 'Rejected') return 'destructive';
+    if (status === 'published') return 'success';
+    if (status === 'rejected') return 'destructive';
     return 'outline';
+  };
+
+  const getBadgeText = (status) => {
+    if (status === 'published') return 'Published';
+    if (status === 'rejected') return 'Rejected';
+    return 'Pending';
   };
 
   return (
@@ -79,7 +61,7 @@ const AdminForum = () => {
             Manage and review all user-submitted forums in the system.
           </span>
         </div>
-        <ForumCreate />
+        <PostCreate />
       </div>
       <Table>
         <TableHeader>
@@ -93,23 +75,25 @@ const AdminForum = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {listForum.map((forum, index) => (
-            <TableRow key={forum.id}>
+          {posts?.map((post, index) => (
+            <TableRow key={post?.id}>
               <TableHead className="font-medium">{index + 1}</TableHead>
               <TableCell>
                 <div className="flex items-center gap-2">
                   <Avatar className="w-8 h-8">
                     <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>{forum.createdBy}</AvatarFallback>
+                    <AvatarFallback>{post?.user?.name}</AvatarFallback>
                   </Avatar>
-                  <p className="texet-md font-medium">{forum.createdBy}</p>
+                  <p className="texet-md font-medium">{post?.user?.name}</p>
                 </div>
               </TableCell>
-              <TableCell>{forum.forumName}</TableCell>
-              <TableCell>{forum.category}</TableCell>
+              <TableCell>{post?.title}</TableCell>
+              <TableCell className="max-w-[300px]">
+                {post?.content.slice(0, 40)}...
+              </TableCell>
               <TableHead>
-                <Badge variant={getBadgeVariant(forum.status)}>
-                  {forum.status}
+                <Badge variant={getBadgeVariant(post?.status)}>
+                  {getBadgeText(post?.status)}
                 </Badge>
               </TableHead>
               <TableCell className="text-right">
@@ -122,31 +106,45 @@ const AdminForum = () => {
                   <DropdownMenuContent>
                     <DropdownMenuItem
                       className="cursor-pointer"
-                      onClick={() => Inertia.visit('/admin/forums/1')}
+                      onClick={() => Inertia.visit(`/admin/forums/${post?.id}`)}
                     >
                       View Detail
                     </DropdownMenuItem>
+                    {post?.status === 'pending' && (
+                      <>
+                        <DropdownMenuItem
+                          onClick={() =>
+                            setApproveModal({
+                              isOpen: true,
+                              postId: post?.id,
+                            })
+                          }
+                        >
+                          Approve
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="cursor-pointer"
+                          onClick={() =>
+                            setRejectModal({
+                              isOpen: true,
+                              postId: post?.id,
+                            })
+                          }
+                        >
+                          Reject
+                        </DropdownMenuItem>
+                      </>
+                    )}
                     <DropdownMenuItem
                       className="cursor-pointer"
                       onClick={() =>
-                        setApproveModal({
+                        setDeleteModal({
                           isOpen: true,
-                          forumId: forum.id,
+                          postId: post?.id,
                         })
                       }
                     >
-                      Approve
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className="cursor-pointer"
-                      onClick={() =>
-                        setRejectModal({
-                          isOpen: true,
-                          forumId: forum.id,
-                        })
-                      }
-                    >
-                      Reject
+                      Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -156,17 +154,29 @@ const AdminForum = () => {
         </TableBody>
       </Table>
 
-      <ForumApprove
-        isOpen={approveModal.isOpen}
-        forumId={approveModal.forumId}
-        onClose={() => setApproveModal({ isOpen: false, forumId: null })}
-      />
+      {approveModal.isOpen && (
+        <PostApprove
+          isOpen={approveModal.isOpen}
+          postId={approveModal.postId}
+          onClose={() => setApproveModal({ isOpen: false, postId: null })}
+        />
+      )}
 
-      <ForumReject
-        isOpen={rejectModal.isOpen}
-        forumId={rejectModal.forumId}
-        onClose={() => setRejectModal({ isOpen: false, forumId: null })}
-      />
+      {rejectModal.isOpen && (
+        <PostReject
+          isOpen={rejectModal.isOpen}
+          postId={rejectModal.postId}
+          onClose={() => setRejectModal({ isOpen: false, postId: null })}
+        />
+      )}
+
+      {deleteModal.isOpen && (
+        <PostDelete
+          isOpen={deleteModal.isOpen}
+          postId={deleteModal.postId}
+          onClose={() => setDeleteModal({ isOpen: false, postId: null })}
+        />
+      )}
     </AdminLayout>
   );
 };

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ForumAdminController;
 use App\Http\Controllers\PostAdminController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -36,22 +37,10 @@ Route::resource('comments', CommentController::class);
 Route::prefix('admin')->group(function () {
     Route::resource('posts', PostAdminController::class)->middleware(['auth', 'verified']);
 
-    Route::get('forums', function () {
-        return Inertia::render('AdminForum');
-    })->middleware(['auth', 'verified'])->name('dashboard');
-
-    Route::get('forums/{id}', function ($id) {
-        return Inertia::render('AdminForumDetail', [
-            'id' => $id,
-        ]);
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::resource('forums', ForumAdminController::class)->middleware(['auth', 'verified']);
 
     Route::get('users', function () {
         return Inertia::render('AdminUser');
-    })->middleware(['auth', 'verified'])->name('dashboard');
-
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::middleware('auth')->group(function () {

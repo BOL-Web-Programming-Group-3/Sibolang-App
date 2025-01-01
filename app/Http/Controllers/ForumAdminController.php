@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class PostAdminController extends Controller
+class ForumAdminController extends Controller
 {
     /**
      * Display a listing of the posts.
@@ -18,10 +18,10 @@ class PostAdminController extends Controller
     public function index()
     {
         // Fetch posts from the database
-        $posts = Post::with('user')->where('type', 'post')->latest()->get();
+        $posts = Post::with('user')->where('type', 'forum')->latest()->get();
 
         // Pass posts to the 'AdminPost' view
-        return Inertia::render('AdminPost', [
+        return Inertia::render('AdminForum', [
             'posts' => $posts,
         ]);
     }
@@ -56,7 +56,7 @@ class PostAdminController extends Controller
             'created_by' => Auth::id(), // Set the user ID as created_by
         ]);
 
-        return redirect()->route('posts.index')->with('success', 'Post created successfully.');
+        return redirect()->route('forums.index')->with('success');
     }
 
     /**
@@ -74,7 +74,7 @@ class PostAdminController extends Controller
             ->get();
 
         // Return the post and its comments to the Inertia view
-        return Inertia::render('AdminPostDetail', [
+        return Inertia::render('AdminForumDetail', [
             'post' => $post->load('user'), // Load the user who created the post
             'comments' => $comments, // Pass the filtered comments
         ]);
@@ -114,7 +114,7 @@ class PostAdminController extends Controller
             'image' => $imagePath,
         ]);
 
-        return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
+        return redirect()->route('posts.index')->with('success');
     }
 
     /**
@@ -133,7 +133,7 @@ class PostAdminController extends Controller
         // Delete the post
         $post->delete();
 
-        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
+        return redirect()->route('forums.index')->with('success');
     }
 
     /**
@@ -156,6 +156,6 @@ class PostAdminController extends Controller
             'status' => $validated['status'],
         ]);
 
-        return redirect()->route('posts.index')->with('success');
+        return redirect()->route('forums.index')->with('success');
     }
 }
