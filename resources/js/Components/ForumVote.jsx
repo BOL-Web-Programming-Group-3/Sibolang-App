@@ -5,7 +5,7 @@ import { useForm } from '@inertiajs/react';
 import { useToast } from '@/hooks/use-toast';
 
 const ForumVote = ({ postId, post }) => {
-  const { upvotes_count = 0, downvotes_count = 0 } = post || {};
+  const { upvotes_count = 0, downvotes_count = 0, user_vote } = post || {};
 
   const {
     data,
@@ -61,27 +61,35 @@ const ForumVote = ({ postId, post }) => {
 
   return (
     <>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1">
         <Button
           variant="ghost"
           size="icon"
           onClick={() => toggleVote('up')}
           disabled={processing}
         >
-          <ArrowBigUp className="w-4 h-4" />
+          <ArrowBigUp
+            className={`w-4 h-4 ${user_vote === 'up' ? 'text-green-600 font-semibold' : ''}`}
+          />
         </Button>
-        <p>{upvotes_count}</p>
+        <p className={`${user_vote === 'up' ? 'text-green-600' : ''}`}>
+          {upvotes_count}
+        </p>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1">
         <Button
           variant="ghost"
           size="icon"
           onClick={() => toggleVote('down')}
           disabled={processing}
         >
-          <ArrowBigDown className="w-4 h-4" />
+          <ArrowBigDown
+            className={`w-4 h-4 ${user_vote === 'down' ? 'text-red-600 font-semibold' : ''}`}
+          />
         </Button>
-        <p>{downvotes_count}</p>
+        <p className={`${user_vote === 'down' ? 'text-red-600' : ''}`}>
+          {downvotes_count}
+        </p>
       </div>
     </>
   );

@@ -31,7 +31,13 @@ class ForumController extends Controller
             ->where('status', 'published')
             ->where('type', 'forum')
             ->latest()
-            ->get();
+            ->get()->map(function ($post) {
+            // Check if the logged-in user has voted on the post
+            $userVote = $post->votes->where('user_id', Auth::id())->first();
+            $post->user_vote = $userVote ? $userVote->vote_type : null; // 'up', 'down', or null if no vote
+
+            return $post;
+        });
 
         // Pass posts to the 'Post' view
         return Inertia::render('Forum', [
