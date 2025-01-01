@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class PostController extends Controller
+class ForumController extends Controller
 {
     /**
      * Display a listing of the posts.
@@ -21,12 +21,12 @@ class PostController extends Controller
         $posts = Post::with('user')
             ->withCount('comments') // Count the related comments for each post
             ->where('status', 'published')
-            ->where('type', 'post')
+            ->where('type', 'forum')
             ->latest()
             ->get();
 
         // Pass posts to the 'Post' view
-        return Inertia::render('Post', [
+        return Inertia::render('Forum', [
             'posts' => $posts,
         ]);
     }
@@ -70,17 +70,17 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Post $forum)
     {
         // Query comments directly with a where clause for the post_id
-        $comments = Comment::where('post_id', $post->id)
+        $comments = Comment::where('post_id', $forum->id)
             ->with('user') // Load the user who created the comment
             ->oldest() // Order by the latest comments
             ->get();
 
-        // Return the post and its comments to the Inertia view
-        return Inertia::render('PostDetail', [
-            'post' => $post->load('user'), // Load the user who created the post
+        // Return the forum and its comments to the Inertia view
+        return Inertia::render('ForumDetail', [
+            'post' => $forum->load('user'), // Load the user who created the forum
             'comments' => $comments, // Pass the filtered comments
         ]);
     }

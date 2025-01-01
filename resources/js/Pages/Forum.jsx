@@ -1,9 +1,8 @@
 import ForumCard from '@/Components/ForumCard';
 import ForumCreate from '@/Components/ForumCreate';
-import { Button } from '@/Components/ui/button';
 import HomeLayout from '@/Layouts/HomeLayout';
 
-export default function Forum() {
+export default function Forum({ posts }) {
   return (
     <HomeLayout>
       <div className="flex flex-col justify-center items-center">
@@ -15,9 +14,10 @@ export default function Forum() {
                 Discuss culture, traditions, and heritage with community.
               </span>
             </div>
-            <ForumCreate />
+            <ForumCreate isAdmin={false} />
           </div>
-          <ForumCard />
+          {posts?.length > 0 &&
+            posts?.map((post) => <ForumCard key={post?.id} post={post} />)}
         </div>
       </div>
     </HomeLayout>

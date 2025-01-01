@@ -65,7 +65,7 @@ const ForumCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
       </CardHeader>
       <ConditionalWrapper
         condition={!isDetail}
-        wrapper={(children) => <Link href={`/posts/${id}`}>{children}</Link>}
+        wrapper={(children) => <Link href={`/forums/${id}`}>{children}</Link>}
       >
         <CardContent>
           {image && (
@@ -111,7 +111,7 @@ const ForumCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
                 <p>3</p>
               </div>
               <div className="flex items-center gap-2">
-                <Link href={`/forums/${itemId}`}>
+                <Link href={`/forums/${id}`}>
                   <Button variant="ghost" size="icon">
                     <MessageCircle className="w-4 h-4" />
                   </Button>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ForumAdminController;
+use App\Http\Controllers\ForumController;
 use App\Http\Controllers\PostAdminController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -22,6 +23,17 @@ Route::resource('posts', PostController::class)->names([
     'edit' => 'user.posts.edit',
     'update' => 'user.posts.update',
     'destroy' => 'user.posts.destroy',
+]);
+
+// User Forums Routes
+Route::resource('forums', ForumController::class)->names([
+    'index' => 'user.forum.index',
+    'create' => 'user.forum.create',
+    'store' => 'user.forum.store',
+    'show' => 'user.forum.show',
+    'edit' => 'user.forum.edit',
+    'update' => 'user.forum.update',
+    'destroy' => 'user.forum.destroy',
 ]);
 
 // About Route
