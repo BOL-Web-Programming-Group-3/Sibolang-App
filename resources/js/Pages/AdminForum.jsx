@@ -19,10 +19,10 @@ import { Button } from '@/Components/ui/button';
 import { EllipsisVertical } from 'lucide-react';
 import { Badge } from '@/Components/ui/badge';
 import { Inertia } from '@inertiajs/inertia';
-import PostApprove from '@/Components/PostApprove';
-import PostReject from '@/Components/PostReject';
-import PostDelete from '@/Components/PostDelete';
 import ForumCreate from '@/Components/ForumCreate';
+import ForumApprove from '@/Components/ForumApprove';
+import ForumReject from '@/Components/ForumReject';
+import ForumDelete from '@/Components/ForumDelete';
 
 const AdminForum = ({ posts }) => {
   const [approveModal, setApproveModal] = useState({
@@ -155,7 +155,7 @@ const AdminForum = ({ posts }) => {
       </Table>
 
       {approveModal.isOpen && (
-        <PostApprove
+        <ForumApprove
           isOpen={approveModal.isOpen}
           postId={approveModal.postId}
           onClose={() => setApproveModal({ isOpen: false, postId: null })}
@@ -163,7 +163,7 @@ const AdminForum = ({ posts }) => {
       )}
 
       {rejectModal.isOpen && (
-        <PostReject
+        <ForumReject
           isOpen={rejectModal.isOpen}
           postId={rejectModal.postId}
           onClose={() => setRejectModal({ isOpen: false, postId: null })}
@@ -171,7 +171,7 @@ const AdminForum = ({ posts }) => {
       )}
 
       {deleteModal.isOpen && (
-        <PostDelete
+        <ForumDelete
           isOpen={deleteModal.isOpen}
           postId={deleteModal.postId}
           onClose={() => setDeleteModal({ isOpen: false, postId: null })}

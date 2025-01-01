@@ -10,21 +10,21 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { useForm } from '@inertiajs/react';
 
-const PostDelete = ({ isOpen, onClose, postId }) => {
+const ForumDelete = ({ isOpen, onClose, postId }) => {
   const { delete: deletePost, processing } = useForm();
   const { toast } = useToast();
 
-  const updateStatus = () => {
-    deletePost(route('admin.posts.destroy', { post: postId }), {
+  const onClickDelete = () => {
+    deletePost(route('admin.forums.destroy', { forum: postId }), {
       onSuccess: () => {
         toast({
-          description: 'Post deleted successfully!',
+          description: 'Forum deleted successfully!',
         });
         onClose();
       },
       onError: () => {
         toast({
-          description: 'Failed to delete post. Please try again.',
+          description: 'Failed to delete forum. Please try again.',
           variant: 'destructive',
         });
       },
@@ -35,11 +35,11 @@ const PostDelete = ({ isOpen, onClose, postId }) => {
     <Dialog open={isOpen} onClose={onClose}>
       <DialogContent className="[&>button]:hidden">
         <DialogHeader>
-          <DialogTitle>Delete Post</DialogTitle>
+          <DialogTitle>Delete Forum</DialogTitle>
         </DialogHeader>
         <div className="py-4">
           <p className="text-md">
-            Are you sure you want to delete this post? This action cannot be
+            Are you sure you want to delete this forum? This action cannot be
             undone.
           </p>
         </div>
@@ -49,7 +49,7 @@ const PostDelete = ({ isOpen, onClose, postId }) => {
           </Button>
           <Button
             type="button"
-            onClick={updateStatus}
+            onClick={onClickDelete}
             disabled={processing}
             variant="destructive"
           >
@@ -61,4 +61,4 @@ const PostDelete = ({ isOpen, onClose, postId }) => {
   );
 };
 
-export default PostDelete;
+export default ForumDelete;

@@ -80,7 +80,7 @@ class ForumAdminController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $forum)
     {
         // Validate the request
         $validated = $request->validate([
@@ -89,7 +89,7 @@ class ForumAdminController extends Controller
         ]);
 
         // Update the post
-        $post->update([
+        $forum->update([
             'title' => $validated['title'],
             'content' => $validated['content'],
             'status' => 'pending', // Default status
@@ -104,15 +104,15 @@ class ForumAdminController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $forum)
     {
         // Delete the image if it exists
-        if ($post->image) {
-            \Storage::delete('public/' . $post->image);
+        if ($forum->image) {
+            \Storage::delete('public/' . $forum->image);
         }
 
         // Delete the post
-        $post->delete();
+        $forum->delete();
 
         return redirect()->route('admin.forums.index')->with('success');
     }
