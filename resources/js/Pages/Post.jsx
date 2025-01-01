@@ -1,8 +1,15 @@
 import PostCard from '@/Components/PostCard';
 import PostCreate from '@/Components/PostCreate';
 import HomeLayout from '@/Layouts/HomeLayout';
+import { usePage } from '@inertiajs/react';
 
 export default function Home({ posts }) {
+  const {
+    props: {
+      auth: { user },
+    },
+  } = usePage(); // Get the current URL
+
   return (
     <HomeLayout>
       <div className="flex flex-col justify-center items-center">
@@ -14,7 +21,7 @@ export default function Home({ posts }) {
                 Discover and share stories about our rich cultural heritage.
               </span>
             </div>
-            <PostCreate isAdmin={false} />
+            {user && <PostCreate />}
           </div>
           {posts?.length > 0 &&
             posts?.map((post) => <PostCard key={post?.id} post={post} />)}

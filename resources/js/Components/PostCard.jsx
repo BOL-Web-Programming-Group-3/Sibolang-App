@@ -15,10 +15,18 @@ import ConditionalWrapper from './ConditionalWrapper';
 import { Badge } from './ui/badge';
 import PostApprove from './PostApprove';
 import PostReject from './PostReject';
+import { usePage } from '@inertiajs/react';
 
 const PostCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
   const { id, status, user, title, content, image, comments_count } =
     post || {};
+
+  const {
+    url,
+    props: {
+      auth: { user: authUser },
+    },
+  } = usePage(); // Get the current URL
 
   const [approveModal, setApproveModal] = useState({
     isOpen: false,
@@ -119,7 +127,7 @@ const PostCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
                     comments?.map((comment) => (
                       <CommentItem key={comment?.id} comment={comment} />
                     ))}
-                  <CommentAdd postId={id} />
+                  {authUser && <CommentAdd postId={id} />}
                 </div>
               </>
             ) : (

@@ -9,12 +9,19 @@ import {
   DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
 import { useForm } from '@inertiajs/react';
-import { Inertia } from '@inertiajs/inertia';
 import { useToast } from '@/hooks/use-toast';
+import { usePage } from '@inertiajs/react';
 
 const CommentItem = ({ comment }) => {
   const { delete: deleteComment, processing } = useForm();
   const { toast } = useToast();
+
+  const {
+    url,
+    props: {
+      auth: { user },
+    },
+  } = usePage(); // Get the current URL
 
   const onClickDelete = () => {
     deleteComment(route('comments.destroy', { comment: comment?.id }), {
@@ -42,22 +49,24 @@ const CommentItem = ({ comment }) => {
           </Avatar>
           <p className="text-md font-medium">{comment?.user?.name}</p>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button variant="ghost" size="icon">
-              <EllipsisVertical />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onClick={onClickDelete}
-              disabled={processing}
-            >
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {user && (
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="ghost" size="icon">
+                <EllipsisVertical />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={onClickDelete}
+                disabled={processing}
+              >
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </div>
       <p className="mt-2">{comment?.content}</p>
     </div>

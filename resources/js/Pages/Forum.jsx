@@ -1,8 +1,15 @@
 import ForumCard from '@/Components/ForumCard';
 import ForumCreate from '@/Components/ForumCreate';
 import HomeLayout from '@/Layouts/HomeLayout';
+import { usePage } from '@inertiajs/react';
 
 export default function Forum({ posts }) {
+  const {
+    props: {
+      auth: { user },
+    },
+  } = usePage(); // Get the current URL
+
   return (
     <HomeLayout>
       <div className="flex flex-col justify-center items-center">
@@ -14,7 +21,7 @@ export default function Forum({ posts }) {
                 Discuss culture, traditions, and heritage with community.
               </span>
             </div>
-            <ForumCreate isAdmin={false} />
+            {user && <ForumCreate isAdmin={false} />}
           </div>
           {posts?.length > 0 &&
             posts?.map((post) => <ForumCard key={post?.id} post={post} />)}

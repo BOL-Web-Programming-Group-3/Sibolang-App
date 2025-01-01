@@ -6,22 +6,25 @@ import {
   CardHeader,
 } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-  ArrowBigDown,
-  ArrowBigUp,
-  EllipsisVertical,
-  MessageCircle,
-} from 'lucide-react';
+import { ArrowBigDown, ArrowBigUp, MessageCircle } from 'lucide-react';
 import { Button } from '@/Components/ui/button';
 import { Link } from '@inertiajs/inertia-react';
 import CommentItem from './CommentItem';
 import CommentAdd from './CommentAdd';
 import ConditionalWrapper from './ConditionalWrapper';
 import { Badge } from './ui/badge';
+import { usePage } from '@inertiajs/react';
 
 const ForumCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
   const { id, status, user, title, content, image, comments_count } =
     post || {};
+
+  const {
+    url,
+    props: {
+      auth: { user: authUser },
+    },
+  } = usePage(); // Get the current URL
 
   const getBadgeVariant = () => {
     if (status === 'published') return 'success';
@@ -93,7 +96,7 @@ const ForumCard = ({ isDetail = false, isAdmin = false, post, comments }) => {
                   comments?.map((comment) => (
                     <CommentItem key={comment?.id} comment={comment} />
                   ))}
-                <CommentAdd postId={id} />
+                {authUser && <CommentAdd postId={id} />}
               </div>
             </>
           ) : (
