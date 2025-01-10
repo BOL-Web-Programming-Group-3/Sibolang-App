@@ -71,11 +71,12 @@ class ForumController extends Controller
             'title' => $validated['title'],
             'content' => $validated['content'],
             'status' => 'pending', // Default status
+            'type' => 'forum', // Use the enum for the type
             'image' => $imagePath, // Store the image path in the database
             'created_by' => Auth::id(), // Set the user ID as created_by
         ]);
 
-        return redirect()->route('user.posts.index')->with('success', 'Post created successfully.');
+        return redirect()->route('user.forums.index')->with('success', 'Post created successfully.');
     }
 
     /**
@@ -159,7 +160,7 @@ class ForumController extends Controller
             'image' => $imagePath,
         ]);
 
-        return redirect()->route('user.posts.index')->with('success', 'Post updated successfully.');
+        return redirect()->route('user.forums.index')->with('success', 'Post updated successfully.');
     }
 
     /**
@@ -178,6 +179,6 @@ class ForumController extends Controller
         // Delete the post
         $post->delete();
 
-        return redirect()->route('user.posts.index')->with('success', 'Post deleted successfully.');
+        return redirect()->route('user.forums.index')->with('success', 'Post deleted successfully.');
     }
 }

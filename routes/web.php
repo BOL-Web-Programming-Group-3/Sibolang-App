@@ -32,13 +32,13 @@ Route::middleware(['auth'])->group(function () {
 
 // User Forums Routes
 Route::resource('forums', ForumController::class)->names([
-    'index' => 'user.forum.index',
-    'create' => 'user.forum.create',
-    'store' => 'user.forum.store',
-    'show' => 'user.forum.show',
-    'edit' => 'user.forum.edit',
-    'update' => 'user.forum.update',
-    'destroy' => 'user.forum.destroy',
+    'index' => 'user.forums.index',
+    'create' => 'user.forums.create',
+    'store' => 'user.forums.store',
+    'show' => 'user.forums.show',
+    'edit' => 'user.forums.edit',
+    'update' => 'user.forums.update',
+    'destroy' => 'user.forums.destroy',
 ]);
 
 // About Route
