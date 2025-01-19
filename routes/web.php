@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ForumAdminController;
 use App\Http\Controllers\ForumController;
@@ -16,12 +17,12 @@ Route::get('/', function () {
 
 // User Posts Routes
 Route::resource('posts', PostController::class)->names([
-    'index' => 'user.posts.index',
-    'create' => 'user.posts.create',
-    'store' => 'user.posts.store',
-    'show' => 'user.posts.show',
-    'edit' => 'user.posts.edit',
-    'update' => 'user.posts.update',
+    'index'   => 'user.posts.index',
+    'create'  => 'user.posts.create',
+    'store'   => 'user.posts.store',
+    'show'    => 'user.posts.show',
+    'edit'    => 'user.posts.edit',
+    'update'  => 'user.posts.update',
     'destroy' => 'user.posts.destroy',
 ]);
 
@@ -32,12 +33,12 @@ Route::middleware(['auth'])->group(function () {
 
 // User Forums Routes
 Route::resource('forums', ForumController::class)->names([
-    'index' => 'user.forums.index',
-    'create' => 'user.forums.create',
-    'store' => 'user.forums.store',
-    'show' => 'user.forums.show',
-    'edit' => 'user.forums.edit',
-    'update' => 'user.forums.update',
+    'index'   => 'user.forums.index',
+    'create'  => 'user.forums.create',
+    'store'   => 'user.forums.store',
+    'show'    => 'user.forums.show',
+    'edit'    => 'user.forums.edit',
+    'update'  => 'user.forums.update',
     'destroy' => 'user.forums.destroy',
 ]);
 
@@ -63,12 +64,12 @@ Route::prefix('admin')->group(function () {
 
     // Admin Posts Routes
     Route::resource('posts', PostAdminController::class)->middleware(['auth', 'verified'])->names([
-        'index' => 'admin.posts.index',
-        'create' => 'admin.posts.create',
-        'store' => 'admin.posts.store',
-        'show' => 'admin.posts.show',
-        'edit' => 'admin.posts.edit',
-        'update' => 'admin.posts.update',
+        'index'   => 'admin.posts.index',
+        'create'  => 'admin.posts.create',
+        'store'   => 'admin.posts.store',
+        'show'    => 'admin.posts.show',
+        'edit'    => 'admin.posts.edit',
+        'update'  => 'admin.posts.update',
         'destroy' => 'admin.posts.destroy',
     ]);
 
@@ -79,18 +80,22 @@ Route::prefix('admin')->group(function () {
 
     // Admin Forums Routes
     Route::resource('forums', ForumAdminController::class)->middleware(['auth', 'verified'])->names([
-        'index' => 'admin.forums.index',
-        'create' => 'admin.forums.create',
-        'store' => 'admin.forums.store',
-        'show' => 'admin.forums.show',
-        'edit' => 'admin.forums.edit',
-        'update' => 'admin.forums.update',
+        'index'   => 'admin.forums.index',
+        'create'  => 'admin.forums.create',
+        'store'   => 'admin.forums.store',
+        'show'    => 'admin.forums.show',
+        'edit'    => 'admin.forums.edit',
+        'update'  => 'admin.forums.update',
         'destroy' => 'admin.forums.destroy',
     ]);
 
-    Route::get('users', function () {
-        return Inertia::render('AdminUser');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('users', [RegisteredUserController::class, 'index'])
+        ->middleware(['auth', 'verified'])
+        ->name('admin.users.index');
+
+    // Route::get('users', function () {
+    //     return Inertia::render('AdminUser');
+    // })->middleware(['auth', 'verified'])->name('dashboard');
 });
 
 require __DIR__ . '/auth.php';
